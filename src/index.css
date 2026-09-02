@@ -11,9 +11,16 @@
 }
 
 @layer base {
-  html, body {
-    @apply bg-surf-black text-surf-white font-sans antialiased overflow-hidden h-full w-full;
+  html {
+    @apply bg-surf-black text-surf-white font-sans antialiased scroll-smooth;
+    scroll-snap-type: y mandatory;
+  }
+  body {
+    @apply bg-surf-black text-surf-white font-sans antialiased min-h-screen w-full overflow-x-hidden;
     -webkit-overflow-scrolling: touch;
+  }
+  #root {
+    @apply min-h-screen w-full flex flex-col;
   }
 }
 
@@ -29,11 +36,11 @@
 }
 
 .section-full {
-  @apply min-h-[100vh] w-full flex items-center justify-center snap-start relative overflow-hidden;
+  @apply h-[100dvh] w-full flex items-center justify-center snap-start snap-always relative overflow-hidden;
 }
 
 .menu-overlay {
-  @apply fixed inset-0 bg-surf-black/95 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6 sm:p-10 transition-all duration-500 overflow-y-auto;
+  @apply fixed inset-0 bg-surf-black z-[70] flex items-center justify-center p-6 sm:p-10 lg:p-14 transition-all duration-300 overflow-y-auto;
 }
 
 .menu-link {
@@ -42,6 +49,6 @@
 }
 
 .hero-text {
-  font-size: clamp(4rem, 22vw, 30rem);
-  @apply font-display leading-[0.8] uppercase tracking-tighter;
+  font-size: clamp(3.5rem, min(14vw, 18vh), 12rem);
+  @apply font-display leading-[0.82] uppercase tracking-tighter text-center;
 }
