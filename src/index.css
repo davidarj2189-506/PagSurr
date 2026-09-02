@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Anton", sans-serif;
+  
+  --color-surf-black: #0a0a0a;
+  --color-surf-white: #f8f8f8;
+  --color-surf-accent: #ff4e00;
+}
+
+@layer base {
+  html, body {
+    @apply bg-surf-black text-surf-white font-sans antialiased overflow-hidden h-full w-full;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.section-full {
+  @apply min-h-[100vh] w-full flex items-center justify-center snap-start relative overflow-hidden;
+}
+
+.menu-overlay {
+  @apply fixed inset-0 bg-surf-black/95 backdrop-blur-md z-50 flex flex-col items-center justify-center p-6 sm:p-10 transition-all duration-500 overflow-y-auto;
+}
+
+.menu-link {
+  font-size: clamp(2.5rem, min(10vw, 8vh), 7rem);
+  @apply font-display uppercase tracking-tighter hover:italic hover:text-surf-accent transition-all duration-300 text-center leading-none;
+}
+
+.hero-text {
+  font-size: clamp(4rem, 22vw, 30rem);
+  @apply font-display leading-[0.8] uppercase tracking-tighter;
+}
