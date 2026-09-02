@@ -125,76 +125,86 @@ export default function Home() {
         ))}
       </nav>
 
-      {/* 1. HERO SECTION (Dark Canvas) */}
+      {/* 1. HERO SECTION (Dark Canvas) - Surf Magazine Editorial Layout */}
       <header 
         id="hero" 
-        className="section-full relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between items-center p-6 sm:p-12 overflow-hidden"
+        className="section-full relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between items-start p-6 sm:p-12 lg:px-16 overflow-hidden"
       >
-        {/* Subtle Ambient Wave Background Image */}
+        {/* Ambient Wave Background Image - Optimized to reveal center surfer */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <motion.div 
             style={{ y: useTransform(scrollYProgress, [0, 0.25], [0, 140]) }}
-            className="w-full h-full bg-[url('https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-40 brightness-95 scale-105"
+            className="w-full h-full bg-[url('https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-60 brightness-95 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-surf-black via-surf-black/40 to-transparent" />
+          {/* Magazine Editorial Shadow: Darker on the left for crisp text readability, clear in the center & right to highlight the surfer */}
+          <div className="absolute inset-0 bg-gradient-to-r from-surf-black/95 via-surf-black/60 to-transparent w-full md:w-3/4" />
+          <div className="absolute inset-0 bg-gradient-to-t from-surf-black via-transparent to-surf-black/40" />
         </div>
 
         {/* Top spacer for header */}
-        <div className="w-full h-10" />
+        <div className="w-full h-12" />
 
-        {/* Center Content */}
-        <motion.div 
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="z-10 text-center max-w-5xl mx-auto w-full flex flex-col items-center justify-center my-auto"
-        >
-          <p className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.4em] text-surf-accent mb-3 sm:mb-4">
-            Nosara, Costa Rica • Boutique Kids & Family Surf School
-          </p>
+        {/* Left-Aligned Magazine Cover Content */}
+        <div className="relative z-10 max-w-7xl mx-auto w-full my-auto flex flex-col items-start justify-center">
+          <motion.div 
+            initial={{ opacity: 0, x: -35 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="text-left max-w-xl lg:max-w-2xl"
+          >
+            {/* Magazine Category Accent Eyebrow */}
+            <div className="flex items-center gap-3 mb-3 sm:mb-4">
+              <span className="w-6 sm:w-10 h-[2px] bg-surf-accent shrink-0" />
+              <p className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.35em] text-surf-accent">
+                Nosara, Costa Rica • Boutique Kids & Family Surf School
+              </p>
+            </div>
 
-          {/* EXACT H1 as required */}
-          <h1 id="main-heading" className="hero-text text-surf-white select-none">
-            Where first waves become forever memories.
-          </h1>
+            {/* EXACT H1 as required */}
+            <h1 id="main-heading" className="font-display text-5xl sm:text-6xl lg:text-7xl uppercase leading-[0.92] text-surf-white select-none tracking-tight">
+              Where first waves become forever memories.
+            </h1>
 
-          {/* EXACT Hero Summary Paragraph as required */}
-          <p id="hero-summary" className="text-sm sm:text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto mt-3 sm:mt-5 text-surf-white/85 leading-relaxed">
-            Family surf coaching at sunset in Playa Guiones, Nosara. Safe, personalized lessons for kids in Costa Rica's Blue Zone.
-          </p>
+            {/* EXACT Hero Summary Paragraph as required */}
+            <p id="hero-summary" className="text-sm sm:text-base md:text-lg font-light tracking-wide max-w-lg mt-4 sm:mt-5 text-surf-white/90 leading-relaxed">
+              Family surf coaching at sunset in Playa Guiones, Nosara. Safe, personalized lessons for kids in Costa Rica's Blue Zone.
+            </p>
 
-          {/* Editorial Action Links */}
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-6 sm:mt-8">
-            <Link 
-              to="/booking"
-              className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-surf-accent hover:text-surf-white border-b-2 border-surf-accent hover:border-surf-white pb-1 transition-all inline-flex items-center gap-2 group"
-            >
-              <span>{data.ctaBookBtn || 'Book Session'}</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
+            {/* Editorial Action Links */}
+            <div className="flex flex-wrap items-center justify-start gap-6 sm:gap-8 mt-6 sm:mt-8">
+              <Link 
+                to="/booking"
+                className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-surf-accent hover:text-surf-white border-b-2 border-surf-accent hover:border-surf-white pb-1 transition-all inline-flex items-center gap-2 group"
+              >
+                <span>{data.ctaBookBtn || 'Book Session'}</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
 
-            <a 
-              href="https://wa.me/50688997873?text=Hola%20Bryan!%20I%20would%20like%20to%20inquire%20about%20surf%20lessons%20in%20Nosara"
-              target="_blank"
-              rel="noreferrer"
-              className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-surf-white/80 hover:text-surf-accent border-b border-surf-white/30 hover:border-surf-accent pb-1 transition-all inline-flex items-center gap-2 group"
-            >
-              <MessageCircle size={14} className="text-surf-accent" />
-              <span>{data.ctaWhatsappBtn || 'WhatsApp Us'}</span>
-            </a>
-          </div>
-        </motion.div>
+              <a 
+                href="https://wa.me/50688997873?text=Hola%20Bryan!%20I%20would%20like%20to%20inquire%20about%20surf%20lessons%20in%20Nosara"
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-surf-white/80 hover:text-surf-accent border-b border-surf-white/30 hover:border-surf-accent pb-1 transition-all inline-flex items-center gap-2 group"
+              >
+                <MessageCircle size={14} className="text-surf-accent" />
+                <span>{data.ctaWhatsappBtn || 'WhatsApp Us'}</span>
+              </a>
+            </div>
+          </motion.div>
+        </div>
 
         {/* Clickable Scroll Prompt at Bottom */}
-        <button 
-          onClick={() => scrollTo('philosophy')}
-          className="z-20 flex flex-col items-center gap-1.5 text-surf-white/50 hover:text-surf-accent transition-colors focus:outline-none cursor-pointer pb-2"
-          aria-label="Scroll to philosophy section"
-        >
-          <span className="text-[9px] uppercase tracking-[0.4em] font-mono">Scroll</span>
-          <ChevronDown size={16} className="animate-bounce text-surf-accent" />
-        </button>
+        <div className="relative z-20 w-full flex justify-center pb-2">
+          <button 
+            onClick={() => scrollTo('philosophy')}
+            className="flex flex-col items-center gap-1.5 text-surf-white/50 hover:text-surf-accent transition-colors focus:outline-none cursor-pointer"
+            aria-label="Scroll to philosophy section"
+          >
+            <span className="text-[9px] uppercase tracking-[0.4em] font-mono">Scroll</span>
+            <ChevronDown size={16} className="animate-bounce text-surf-accent" />
+          </button>
+        </div>
       </header>
 
       {/* 2. Philosophy & Safety Section (Light Canvas) - GEO & AEO Content */}
@@ -541,7 +551,7 @@ export default function Home() {
             Direct Connection
           </span>
           {/* EXACT H2 as required */}
-          <h2 className="font-display text-4xl sm:text-6xl md:text-7xl uppercase leading-none mb-4">
+          <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl uppercase leading-none mb-4">
             Ready for their first wave at sunset?
           </h2>
           <p className="text-sm sm:text-base font-light text-surf-white/80 mb-6 max-w-2xl mx-auto leading-relaxed">

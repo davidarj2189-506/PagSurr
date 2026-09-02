@@ -1,4 +1,36 @@
+# https://www.robotstxt.org/robotstxt.html
+# Robots.txt for First Peak Surf (https://firstpeaksurf.com)
+# Optimized for Search Engine Crawlers & AI Answer Engines (AEO/GEO)
+
 User-agent: *
 Allow: /
 
+# Search Engine Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+# AI Assistants & Generative Search Engines (ChatGPT, Gemini, Claude, Perplexity)
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Host & Sitemap
+Host: https://firstpeaksurf.com
 Sitemap: https://firstpeaksurf.com/sitemap.xml
