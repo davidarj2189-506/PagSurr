@@ -77,8 +77,10 @@ export default function KidsClass() {
           <div className="lg:col-span-5 relative aspect-[4/5] overflow-hidden border border-surf-white/20 group shadow-2xl">
             <img 
               src={data.heroImage || 'https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&q=80'} 
-              alt="Kids surfing in Playa Guiones"
-              className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
+              alt="Kids surf lesson at sunset in Playa Guiones, Nosara - First Peak Surf"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out"
             />
             <div className="absolute top-4 left-4 bg-surf-black/90 px-3 py-1 border border-surf-accent text-[10px] font-mono text-surf-white uppercase">
               100% Gentle Sand Bottom
@@ -86,19 +88,19 @@ export default function KidsClass() {
           </div>
         </div>
 
-        {/* Intro Section: Why Guiones */}
-        <div className="bg-surf-white text-surf-black p-8 sm:p-16 mb-24">
-          <div className="max-w-4xl mx-auto">
-            <span className="text-[10px] uppercase font-mono tracking-[0.4em] opacity-40 block mb-4">
+        {/* Intro Section: Why Guiones - Open Editorial Section (No white card box) */}
+        <div className="py-16 border-t border-b border-surf-white/10 mb-24">
+          <div className="max-w-4xl">
+            <span className="text-[10px] uppercase font-mono tracking-[0.4em] text-surf-accent block mb-4">
               The Ocean Playground
             </span>
-            <h2 className="font-display text-3xl sm:text-5xl uppercase leading-[0.95] mb-6">
+            <h2 className="font-display text-3xl sm:text-5xl uppercase leading-[0.95] mb-6 text-surf-white">
               {data.introTitle || 'Why Nosara is the Best Place on Earth for Kids to Learn'}
             </h2>
-            <p className="text-base sm:text-lg font-light leading-relaxed opacity-80 mb-8">
+            <p className="text-base sm:text-lg font-light leading-relaxed text-surf-white/80 mb-8">
               {data.introText || 'Playa Guiones features a wide, gentle sandy shelf with no sharp rocks, no reef hazards, and hundreds of meters of soft waist-deep whitewater. It is nature’s safest classroom. We pair this world-class arena with gentle instruction designed specifically for developing motor skills and tender ocean confidence.'}
             </p>
-            <div className="grid sm:grid-cols-3 gap-6 pt-6 border-t border-surf-black/10 text-xs font-mono uppercase tracking-wider">
+            <div className="grid sm:grid-cols-3 gap-6 pt-6 border-t border-surf-white/10 text-xs font-mono uppercase tracking-wider text-surf-white/70">
               <div>🌊 No Sharp Coral Reefs</div>
               <div>☀️ 80°F Warm Water Year-Round</div>
               <div>🏖️ Soft Sand Bottom Everywhere</div>
@@ -106,7 +108,7 @@ export default function KidsClass() {
           </div>
         </div>
 
-        {/* Pillars of Kids Coaching */}
+        {/* Pillars of Kids Coaching - Open Columns (No boxes/cards) */}
         <div className="mb-24">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-[10px] uppercase font-mono tracking-[0.5em] text-surf-accent block mb-3">
@@ -117,12 +119,12 @@ export default function KidsClass() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
             {(data.pillars || []).map((pillar: any, i: number) => (
-              <div key={i} className="border border-surf-white/10 p-8 bg-surf-black flex flex-col justify-between">
+              <div key={i} className="border-t border-surf-white/10 pt-6 flex flex-col justify-between">
                 <div>
-                  <span className="font-mono text-xs text-surf-accent block mb-4">Pillar 0{i + 1}</span>
-                  <h3 className="text-xl font-bold uppercase tracking-tight text-surf-white mb-3">
+                  <span className="font-mono text-xs text-surf-accent block mb-3">Pillar 0{i + 1}</span>
+                  <h3 className="text-xl font-bold uppercase tracking-tight text-surf-white mb-2">
                     {pillar.title}
                   </h3>
                   <p className="text-sm font-light text-surf-white/70 leading-relaxed">

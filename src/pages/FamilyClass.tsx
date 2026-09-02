@@ -77,8 +77,10 @@ export default function FamilyClass() {
           <div className="lg:col-span-5 relative aspect-[4/5] overflow-hidden border border-surf-white/20 group shadow-2xl">
             <img 
               src={data.heroImage || 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80'} 
-              alt="Family surf experience Nosara"
-              className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
+              alt="Family surf lesson at sunset in Playa Guiones, Nosara - First Peak Surf"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out"
             />
             <div className="absolute bottom-4 left-4 right-4 bg-surf-black/90 p-4 border border-surf-white/20 text-xs">
               <p className="font-bold uppercase text-surf-accent">All Generations Welcome</p>
@@ -87,19 +89,19 @@ export default function FamilyClass() {
           </div>
         </div>
 
-        {/* Story / Intro Section */}
-        <div className="bg-surf-white text-surf-black p-8 sm:p-16 mb-24">
-          <div className="max-w-4xl mx-auto">
-            <span className="text-[10px] uppercase font-mono tracking-[0.4em] opacity-40 block mb-4">
+        {/* Story / Intro Section - Open Editorial Layout (No card box) */}
+        <div className="py-16 border-t border-b border-surf-white/10 mb-24">
+          <div className="max-w-4xl">
+            <span className="text-[10px] uppercase font-mono tracking-[0.4em] text-surf-accent block mb-4">
               Pure Pura Vida
             </span>
-            <h2 className="font-display text-3xl sm:text-5xl uppercase leading-[0.95] mb-6">
+            <h2 className="font-display text-3xl sm:text-5xl uppercase leading-[0.95] mb-6 text-surf-white">
               {data.introTitle || 'Shared Triumphs in Warm Costa Rican Water'}
             </h2>
-            <p className="text-base sm:text-lg font-light leading-relaxed opacity-80 mb-8">
+            <p className="text-base sm:text-lg font-light leading-relaxed text-surf-white/80 mb-8">
               {data.introText || 'There is nothing quite like hearing your kids cheer for you as you catch a wave, or watching them ride their first roller with pure joy. Our family sessions are designed so everyone progresses at their own pace without feeling rushed or left behind.'}
             </p>
-            <div className="grid sm:grid-cols-3 gap-6 pt-6 border-t border-surf-black/10 text-xs font-mono uppercase tracking-wider">
+            <div className="grid sm:grid-cols-3 gap-6 pt-6 border-t border-surf-white/10 text-xs font-mono uppercase tracking-wider text-surf-white/70">
               <div>👨‍👩‍👧‍👦 2 Coaches Dedicated</div>
               <div>📸 High-Res Family Photo Pack</div>
               <div>🥥 Beach Canopy & Pipas Frías</div>
@@ -107,7 +109,7 @@ export default function FamilyClass() {
           </div>
         </div>
 
-        {/* Features Grid */}
+        {/* Features Grid - Open Editorial Columns (No boxes/cards) */}
         <div className="mb-24">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-[10px] uppercase font-mono tracking-[0.5em] text-surf-accent block mb-3">
@@ -118,12 +120,12 @@ export default function FamilyClass() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {(data.features || []).map((feat: any, idx: number) => (
-              <div key={idx} className="border border-surf-white/10 p-8 sm:p-10 bg-surf-black flex flex-col justify-between">
+              <div key={idx} className="border-t border-surf-white/10 pt-6 flex flex-col justify-between">
                 <div>
-                  <span className="font-mono text-xs text-surf-accent block mb-4">0{idx + 1}</span>
-                  <h3 className="text-2xl font-bold uppercase tracking-tight text-surf-white mb-4">
+                  <span className="font-mono text-xs text-surf-accent block mb-3">0{idx + 1}</span>
+                  <h3 className="text-2xl font-bold uppercase tracking-tight text-surf-white mb-3">
                     {feat.title}
                   </h3>
                   <p className="text-sm font-light text-surf-white/70 leading-relaxed">
@@ -135,9 +137,9 @@ export default function FamilyClass() {
           </div>
         </div>
 
-        {/* What Is Included Checklist */}
-        <div className="border border-surf-white/10 p-8 sm:p-12 mb-20">
-          <h3 className="font-display text-2xl sm:text-3xl uppercase tracking-tight mb-8 text-center">
+        {/* What Is Included Checklist - Open Editorial List (No card box) */}
+        <div className="py-12 border-b border-surf-white/10 mb-20">
+          <h3 className="font-display text-2xl sm:text-4xl uppercase tracking-tight mb-8 text-center text-surf-white">
             Everything Taken Care Of For Your Family
           </h3>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm font-light text-surf-white/80">

@@ -4,6 +4,7 @@
  */
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { LanguageProvider } from './lib/i18n';
 import Layout from './components/Layout';
 import Home from './pages/Home';
@@ -20,27 +21,29 @@ import Blog from './pages/Blog';
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/classes" element={<Classes />} />
-            <Route path="/classes/kids" element={<KidsClass />} />
-            <Route path="/classes/family" element={<FamilyClass />} />
-            <Route path="/classes/private" element={<PrivateClass />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/us" element={<About />} />
-            <Route path="/service" element={<Classes />} />
-            <Route path="/booking" element={<Booking />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<Faq />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
-        </Layout>
-      </Router>
-    </LanguageProvider>
+    <HelmetProvider>
+      <LanguageProvider>
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/classes" element={<Classes />} />
+              <Route path="/classes/kids" element={<KidsClass />} />
+              <Route path="/classes/family" element={<FamilyClass />} />
+              <Route path="/classes/private" element={<PrivateClass />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/us" element={<About />} />
+              <Route path="/service" element={<Classes />} />
+              <Route path="/booking" element={<Booking />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/faq" element={<Faq />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </LanguageProvider>
+    </HelmetProvider>
   );
 }

@@ -127,8 +127,10 @@ export default function Contact() {
               <div className="h-40 w-full overflow-hidden border border-surf-white/10 relative">
                 <img 
                   src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80" 
-                  alt="Playa Guiones beach"
-                  className="w-full h-full object-cover grayscale brightness-75"
+                  alt="Playa Guiones beach meeting location at sunset in Nosara, Costa Rica - First Peak Surf"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 flex items-center justify-center bg-surf-black/40">
                   <span className="text-xs font-mono tracking-widest text-surf-white uppercase px-3 py-1 bg-surf-black/80 border border-surf-accent">

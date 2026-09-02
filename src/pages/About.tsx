@@ -53,8 +53,10 @@ export default function About() {
           <div className="lg:col-span-5 relative aspect-[4/5] overflow-hidden group shadow-2xl">
             <img 
               src={data.heroImage || 'https://images.unsplash.com/photo-1528150177508-7cc0c36cda5c?auto=format&fit=crop&q=80'} 
-              alt="Coach Bryan in Playa Guiones"
-              className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
+              alt="Coach Bryan teaching surfing at sunset in Playa Guiones, Nosara - First Peak Surf"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out"
             />
             <div className="absolute bottom-6 left-6 right-6 p-4 bg-surf-black text-surf-white border-l-2 border-surf-accent">
               <span className="text-[10px] font-mono uppercase text-surf-accent block">Head Instructor</span>

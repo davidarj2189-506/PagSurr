@@ -55,8 +55,10 @@ export default function Service() {
               <div className="relative aspect-[4/5] w-full overflow-hidden mb-8">
                 <img 
                   src={item.image} 
-                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out" 
-                  alt={item.name} 
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out" 
+                  alt={`${item.name} surf lesson in Playa Guiones, Nosara - First Peak Surf`}
                 />
               </div>
               

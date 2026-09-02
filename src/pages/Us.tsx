@@ -77,8 +77,10 @@ export default function Us() {
       >
         <img 
           src="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&q=80" 
-          alt="Surfing in Nosara"
-          className="absolute inset-0 w-full h-full object-cover grayscale brightness-90 hover:grayscale-0 hover:scale-105 transition-all duration-[2s]"
+          alt="Surfing in Playa Guiones at sunset in Nosara, Costa Rica - First Peak Surf"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-all duration-[2s]"
         />
       </motion.div>
 

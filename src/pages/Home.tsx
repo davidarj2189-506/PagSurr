@@ -1,50 +1,45 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { ArrowRight, ShieldCheck, Video, HeartHandshake, Waves, MessageCircle, Star, ChevronDown, Check } from 'lucide-react';
+import { ArrowRight, Waves, MessageCircle, Star, ChevronDown, Check, Play } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
+import { getHomePageSchema } from '../utils/schemaGenerator';
 
 export default function Home() {
   const { t } = useLanguage();
   const data = t('home') || {};
-  const { scrollYProgress } = useScroll();
-  const [activeSection, setActiveSection] = useState('hero');
+  const [activeSection, setActiveSection] = useState(0);
 
-  const diffIcons = [
-    <ShieldCheck className="w-6 h-6 sm:w-8 sm:h-8 text-surf-accent" />,
-    <HeartHandshake className="w-6 h-6 sm:w-8 sm:h-8 text-surf-accent" />,
-    <Video className="w-6 h-6 sm:w-8 sm:h-8 text-surf-accent" />,
-    <Waves className="w-6 h-6 sm:w-8 sm:h-8 text-surf-accent" />
-  ];
+  const { scrollYProgress } = useScroll();
 
   const sections = [
-    { id: 'hero', label: 'Home' },
-    { id: 'philosophy', label: 'Philosophy' },
-    { id: 'differentiators', label: 'The Difference' },
-    { id: 'programs', label: 'Programs' },
-    { id: 'video-analysis', label: 'Video Analysis' },
-    { id: 'testimonials', label: 'Reviews' },
-    { id: 'contact', label: 'Book & Contact' },
+    { id: 'hero', name: 'Intro' },
+    { id: 'philosophy', name: 'Philosophy' },
+    { id: 'programs', name: 'Programs' },
+    { id: 'differentiators', name: 'Why Us' },
+    { id: 'video-analysis', name: 'Video' },
+    { id: 'testimonials', name: 'Reviews' },
+    { id: 'contact', name: 'Reserve' }
   ];
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
+    const handleScroll = () => {
+      const scrollPos = window.scrollY + window.innerHeight / 3;
+      sections.forEach((sec, idx) => {
+        const el = document.getElementById(sec.id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            setActiveSection(idx);
           }
-        });
-      },
-      { threshold: 0.5 }
-    );
+        }
+      });
+    };
 
-    sections.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const scrollTo = (id: string) => {
@@ -54,49 +49,92 @@ export default function Home() {
     }
   };
 
-  return (
-    <>
-      {/* Floating Section Navigation Dots (Desktop / Tablet) */}
-      <nav 
-        aria-label="Section navigation"
-        className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col items-center gap-3.5 pointer-events-auto"
-      >
-        {sections.map((sec, idx) => {
-          const isActive = activeSection === sec.id;
-          return (
-            <button
-              key={sec.id}
-              onClick={() => scrollTo(sec.id)}
-              className="group relative flex items-center justify-center p-1.5 focus:outline-none"
-              aria-label={`Scroll to ${sec.label}`}
-            >
-              {/* Tooltip Label */}
-              <span className="absolute right-7 px-2.5 py-1 bg-surf-black/90 text-surf-white text-[10px] font-mono uppercase tracking-widest border border-surf-white/10 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap shadow-lg">
-                {sec.label}
-              </span>
+  const programsData = [
+    {
+      title: 'Kids Surf Lessons',
+      path: '/classes/kids',
+      tag: 'Ages 6-12',
+      desc: 'Dedicated kids surf lessons in gentle whitewater at Playa Guiones, Nosara. Safe, supportive coaching with custom soft-top boards, strict 1:3 ratio, and video capture.'
+    },
+    {
+      title: 'Family Surf',
+      path: '/classes/family',
+      tag: 'All Generations',
+      desc: 'Catch waves together during stunning Pacific sunsets in Nosara, Costa Rica. Two coaches accompany your family to balance parent and child paces with shared video analysis.'
+    },
+    {
+      title: 'Private Coaching',
+      path: '/classes/private',
+      tag: '1-on-1 Focus',
+      desc: '1-on-1 private VIP coaching with ISA Level 2 Coach Bryan at Playa Guiones. Tailored for rapid skill progression, wave selection, and in-depth video review in the Blue Zone.'
+    }
+  ];
 
-              {/* Dot Indicator */}
-              <span 
-                className={`block rounded-full transition-all duration-300 ${
-                  isActive 
-                    ? 'w-3 h-3 bg-surf-accent shadow-[0_0_10px_rgba(255,78,0,0.9)] scale-110' 
-                    : 'w-1.5 h-1.5 bg-surf-white/40 group-hover:bg-surf-white group-hover:scale-125'
-                }`}
-              />
-            </button>
-          );
-        })}
+  const differentiatorsData = [
+    {
+      num: '01',
+      title: 'Max 1:3 Instructor Ratio',
+      desc: 'Every lesson in Playa Guiones caps at 3 children per instructor. Uncompromising personal ocean attention and hands-on wave catching in Costa Rica’s Blue Zone.'
+    },
+    {
+      num: '02',
+      title: 'Video Analysis Included',
+      desc: 'Beach telephoto 4K footage included with every session. Review pop-up mechanics on iPad and take home lifelong family memories of sunset waves in Nosara.'
+    },
+    {
+      num: '03',
+      title: 'Pediatric First-Aid Certified',
+      desc: 'All coaches maintain dual certifications in International Surfing Association (ISA) surf coaching and Red Cross Pediatric Ocean CPR & Water Lifeguarding.'
+    }
+  ];
+
+  return (
+    <main className="relative bg-surf-black">
+      <SEO 
+        title="First Peak Surf | Kids & Family Surf School Nosara, Costa Rica"
+        description="Where first waves become forever memories. Family surf coaching at sunset in Playa Guiones, Nosara. Safe, personalized lessons for kids in Costa Rica's Blue Zone."
+        canonical="https://firstpeaksurf.com"
+        ogImage="https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&q=80"
+        schemaData={getHomePageSchema()}
+      />
+
+      {/* Modern Editorial Dot Navigation */}
+      <nav aria-label="Page navigation" className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-3">
+        {sections.map((sec, idx) => (
+          <button
+            key={sec.id}
+            onClick={() => scrollTo(sec.id)}
+            className="group flex items-center justify-end gap-2 focus:outline-none cursor-pointer"
+            aria-label={`Scroll to ${sec.name}`}
+          >
+            <span 
+              className={`text-[9px] uppercase tracking-widest font-mono transition-all duration-300 opacity-0 group-hover:opacity-100 ${
+                activeSection === idx ? 'text-surf-accent opacity-100' : 'text-surf-white/60'
+              }`}
+            >
+              {sec.name}
+            </span>
+            <div 
+              className={`w-1.5 transition-all duration-300 ${
+                activeSection === idx 
+                  ? 'h-6 bg-surf-accent' 
+                  : 'h-1.5 bg-surf-white/30 group-hover:bg-surf-white group-hover:h-3'
+              }`} 
+            />
+          </button>
+        ))}
       </nav>
 
-      {/* 1. Hero Section */}
-      <section 
+      {/* 1. HERO SECTION (Dark Canvas) */}
+      <header 
         id="hero" 
-        className="section-full bg-surf-black text-surf-white px-6 py-10 sm:py-12 flex flex-col justify-between items-center"
+        className="section-full relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between items-center p-6 sm:p-12 overflow-hidden"
       >
+        {/* Subtle Ambient Wave Background Image */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <motion.div 
             style={{ y: useTransform(scrollYProgress, [0, 0.25], [0, 140]) }}
-            className="w-full h-full bg-[url('https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-30 grayscale brightness-75 scale-105"
+            className="w-full h-full bg-[url('https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-40 brightness-95 scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-surf-black via-surf-black/40 to-transparent" />
         </div>
@@ -116,15 +154,17 @@ export default function Home() {
             Nosara, Costa Rica • Boutique Kids & Family Surf School
           </p>
 
-          <h1 className="hero-text text-surf-white select-none">
-            {data.heroTitle || 'FIRST PEAK'}
+          {/* EXACT H1 as required */}
+          <h1 id="main-heading" className="hero-text text-surf-white select-none">
+            Where first waves become forever memories.
           </h1>
 
-          <p className="text-sm sm:text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto mt-3 sm:mt-5 text-surf-white/85 leading-relaxed">
-            "{data.heroSubtitle || 'Where first waves become forever memories.'}"
+          {/* EXACT Hero Summary Paragraph as required */}
+          <p id="hero-summary" className="text-sm sm:text-lg md:text-xl font-light tracking-wide max-w-2xl mx-auto mt-3 sm:mt-5 text-surf-white/85 leading-relaxed">
+            Family surf coaching at sunset in Playa Guiones, Nosara. Safe, personalized lessons for kids in Costa Rica's Blue Zone.
           </p>
 
-          {/* Clean Editorial Links (No Boxed Buttons) */}
+          {/* Editorial Action Links */}
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-6 sm:mt-8">
             <Link 
               to="/booking"
@@ -150,13 +190,14 @@ export default function Home() {
         <button 
           onClick={() => scrollTo('philosophy')}
           className="z-20 flex flex-col items-center gap-1.5 text-surf-white/50 hover:text-surf-accent transition-colors focus:outline-none cursor-pointer pb-2"
+          aria-label="Scroll to philosophy section"
         >
           <span className="text-[9px] uppercase tracking-[0.4em] font-mono">Scroll</span>
           <ChevronDown size={16} className="animate-bounce text-surf-accent" />
         </button>
-      </section>
+      </header>
 
-      {/* 2. Philosophy & Safety Section (Light Canvas) */}
+      {/* 2. Philosophy & Safety Section (Light Canvas) - GEO & AEO Content */}
       <section 
         id="philosophy" 
         className="section-full bg-surf-white text-surf-black px-6 sm:px-12 py-8 sm:py-10"
@@ -170,16 +211,16 @@ export default function Home() {
         >
           <div>
             <span className="text-[10px] font-bold uppercase tracking-[0.4em] opacity-40 block mb-2">
-              {data.aboutConnection || '01 / Safety & Philosophy'}
+              01 / Safety & Philosophy
             </span>
-            <h2 className="font-display text-4xl sm:text-5xl lg:text-7xl uppercase leading-[0.92] mb-5">
-              {data.aboutTitle || 'Gentle Waves. Big Smiles.'}
-            </h2>
+            <div className="font-display text-4xl sm:text-5xl lg:text-7xl uppercase leading-[0.92] mb-5">
+              Gentle Waves. Big Smiles.
+            </div>
             <p className="text-sm sm:text-base font-light leading-relaxed max-w-xl opacity-85 mb-3">
-              {data.aboutDesc || 'Located on the warm, sand-bottom shores of Playa Guiones, First Peak Surf is designed specifically for children (ages 6–12) and families. We combine calm, positive pedagogy with unmatched ocean safety standards to ensure every session is pure joy.'}
+              Yes, children can learn to surf from age 6 at Playa Guiones in Nosara. Our ISA-certified instructors use soft-top boards in the whitewater zone, with the warm Pacific waters and stunning sunsets of Costa Rica's Blue Zone creating the perfect learning environment.
             </p>
             <p className="text-xs sm:text-sm font-light leading-relaxed max-w-xl opacity-70 mb-6">
-              Under the guidance of Coach Bryan, every session is timed with the gentlest low-tide conditions, utilizing high-buoyancy soft-top boards and real-time video feedback to turn timid first-timers into beaming, confident wave riders.
+              Located on the sunny shores of the Península de Nicoya, our surf lessons in Nosara, Costa Rica are strictly synchronized with low-tide windows so children stand comfortably on soft sand while catching rolling Pacific waves.
             </p>
 
             <Link 
@@ -194,8 +235,10 @@ export default function Home() {
           <div className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-[4/3] max-h-[42vh] w-full overflow-hidden shadow-xl">
             <img 
               src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80" 
-              className="w-full h-full object-cover grayscale brightness-95 hover:grayscale-0 hover:scale-105 transition-all duration-1000 ease-out"
-              alt="Kids surfing in Nosara"
+              className="w-full h-full object-cover hover:scale-105 transition-all duration-1000 ease-out" 
+              alt="Kids surf lesson at sunset in Playa Guiones, Nosara - First Peak Surf"
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute bottom-3 left-3 right-3 p-2.5 bg-surf-black/90 text-surf-white backdrop-blur-sm border-l-2 border-surf-accent">
               <p className="text-[9px] font-mono tracking-widest uppercase opacity-60">Playa Guiones • Blue Zone Costa Rica</p>
@@ -205,7 +248,73 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* 3. Differentiators Section (Dark Canvas) - No Boxed Cards */}
+      {/* 3. PROGRAMS OVERVIEW SECTION (Light Canvas) - EXACT H2 & H3s */}
+      <section 
+        id="programs" 
+        className="section-full bg-surf-white text-surf-black px-6 sm:px-12 py-8 sm:py-10 border-t border-surf-black/10"
+      >
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.25 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-7xl mx-auto w-full flex flex-col justify-center my-auto"
+        >
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 sm:mb-8 gap-4">
+            <div>
+              <span className="text-[10px] uppercase font-mono tracking-[0.5em] opacity-40 block mb-1.5">
+                Playa Guiones Surf Experiences
+              </span>
+              {/* EXACT H2 as required */}
+              <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl uppercase leading-none">
+                Surf lessons designed for kids and families in Nosara
+              </h2>
+            </div>
+            <Link 
+              to="/classes" 
+              className="text-xs font-bold uppercase tracking-widest border-b-2 border-surf-black pb-1 hover:text-surf-accent hover:border-surf-accent transition-colors shrink-0"
+            >
+              Compare All Programs & Rates →
+            </Link>
+          </div>
+
+          {/* Clean Editorial Columns with EXACT H3 tags */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {programsData.map((service, i) => (
+              <article 
+                key={service.title}
+                className="group flex flex-col justify-between pb-4 border-b border-surf-black/10 hover:border-surf-accent transition-colors"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-mono text-xs font-bold text-surf-accent">0{i + 1}</span>
+                    <span className="text-[9px] uppercase tracking-widest font-mono text-surf-black/60">
+                      {service.tag}
+                    </span>
+                  </div>
+                  {/* EXACT H3 as required */}
+                  <h3 className="text-lg sm:text-xl font-bold uppercase tracking-tight mb-2 group-hover:text-surf-accent transition-colors leading-snug">
+                    {service.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm font-light opacity-75 leading-relaxed">
+                    {service.desc}
+                  </p>
+                </div>
+
+                <Link 
+                  to={service.path}
+                  className="pt-3 mt-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider group-hover:text-surf-accent transition-colors"
+                >
+                  <span>Explore Program</span>
+                  <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* 4. DIFFERENTIATORS SECTION (Dark Canvas) - EXACT H2 & H3s */}
       <section 
         id="differentiators" 
         className="section-full bg-surf-black text-surf-white px-6 sm:px-12 py-8 sm:py-10 border-t border-surf-white/10"
@@ -220,10 +329,11 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 sm:mb-8 gap-4">
             <div>
               <span className="text-[10px] uppercase font-mono tracking-[0.5em] text-surf-accent block mb-1.5">
-                {data.differentiatorsSubtitle || 'Why Parents Trust Us'}
+                Safety & Excellence
               </span>
+              {/* EXACT H2 as required */}
               <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl uppercase leading-none">
-                {data.differentiatorsTitle || 'The First Peak Difference'}
+                Why families choose First Peak Surf
               </h2>
             </div>
             <Link 
@@ -235,20 +345,18 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Clean Columns without Boxes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {(data.differentiators || []).map((diff: any, idx: number) => (
-              <div 
+          {/* Clean Editorial Columns with EXACT H3 tags */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {differentiatorsData.map((diff) => (
+              <article 
                 key={diff.title}
-                className="flex flex-col justify-between group"
+                className="flex flex-col justify-between group border-t border-surf-white/15 pt-4"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3 pb-2 border-b border-surf-white/10">
-                    <span className="font-display text-2xl text-surf-accent">{diff.num}</span>
-                    <div className="opacity-70 group-hover:opacity-100 transition-opacity">
-                      {diffIcons[idx % diffIcons.length]}
-                    </div>
-                  </div>
+                  <span className="font-mono text-xs uppercase tracking-widest text-surf-accent block mb-2">
+                    {diff.num}
+                  </span>
+                  {/* EXACT H3 as required */}
                   <h3 className="text-base sm:text-lg font-bold uppercase tracking-tight mb-2 text-surf-white group-hover:text-surf-accent transition-colors">
                     {diff.title}
                   </h3>
@@ -256,7 +364,7 @@ export default function Home() {
                     {diff.desc}
                   </p>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
 
@@ -265,94 +373,32 @@ export default function Home() {
             <div>
               <div className="font-display text-3xl sm:text-5xl text-surf-accent">1:3</div>
               <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-surf-white/50 font-mono mt-0.5">
-                {data.statsRatioLabel || 'Max Ratio'}
+                Max Student Ratio
               </p>
             </div>
             <div>
               <div className="font-display text-3xl sm:text-5xl text-surf-white">100%</div>
               <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-surf-white/50 font-mono mt-0.5">
-                {data.statsSafetyLabel || 'Safety Record'}
+                Safety Record
               </p>
             </div>
             <div>
               <div className="font-display text-3xl sm:text-5xl text-surf-accent">6–12</div>
               <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-surf-white/50 font-mono mt-0.5">
-                {data.statsAgeLabel || 'Grom Age Focus'}
+                Kids Age Focus
               </p>
             </div>
             <div>
               <div className="font-display text-3xl sm:text-5xl text-surf-white">300+</div>
               <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-surf-white/50 font-mono mt-0.5">
-                {data.statsBeachLabel || 'Days Waves/Year'}
+                Days Waves/Year
               </p>
             </div>
           </div>
         </motion.div>
       </section>
 
-      {/* 4. Programs Overview Section (Light Canvas) - No Boxed Cards */}
-      <section 
-        id="programs" 
-        className="section-full bg-surf-white text-surf-black px-6 sm:px-12 py-8 sm:py-10"
-      >
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.25 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-7xl mx-auto w-full flex flex-col justify-center my-auto"
-        >
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-6 sm:mb-8 gap-4">
-            <div>
-              <span className="text-[10px] uppercase font-mono tracking-[0.5em] opacity-40 block mb-1.5">
-                {data.servicesSubtitle || 'Crafted for Every Family Need'}
-              </span>
-              <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl uppercase leading-none">
-                {data.servicesTitle || 'Our Programs'}
-              </h2>
-            </div>
-            <Link 
-              to="/classes" 
-              className="text-xs font-bold uppercase tracking-widest border-b-2 border-surf-black pb-1 hover:text-surf-accent hover:border-surf-accent transition-colors shrink-0"
-            >
-              Compare All Programs & Rates →
-            </Link>
-          </div>
-
-          {/* Clean Editorial Columns without Boxes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {(data.servicesItems || []).map((service: any, i: number) => (
-              <Link 
-                to={service.path || '/classes'}
-                key={service.title}
-                className="group flex flex-col justify-between pb-4 border-b border-surf-black/10 hover:border-surf-accent transition-colors"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="font-mono text-xs font-bold text-surf-accent">0{i + 1}</span>
-                    <span className="text-[9px] uppercase tracking-widest font-mono text-surf-black/60">
-                      {service.tag}
-                    </span>
-                  </div>
-                  <h3 className="text-lg sm:text-xl font-bold uppercase tracking-tight mb-2 group-hover:text-surf-accent transition-colors leading-snug">
-                    {service.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm font-light opacity-75 leading-relaxed line-clamp-3">
-                    {service.desc}
-                  </p>
-                </div>
-
-                <div className="pt-3 mt-4 flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider group-hover:text-surf-accent transition-colors">
-                  <span>View Details</span>
-                  <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* 5. Video Analysis Section (Dark Canvas) */}
+      {/* 5. VIDEO ANALYSIS SECTION (Dark Canvas) */}
       <section 
         id="video-analysis" 
         className="section-full bg-surf-black text-surf-white px-6 sm:px-12 py-8 sm:py-10 border-t border-surf-white/10"
@@ -368,15 +414,15 @@ export default function Home() {
             <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.4em] text-surf-accent block mb-2">
               Included in Every Session
             </span>
-            <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl uppercase leading-none mb-4">
+            <div className="font-display text-3xl sm:text-5xl lg:text-6xl uppercase leading-none mb-4">
               {data.videoBannerTitle || 'See the Joy in Action'}
-            </h2>
+            </div>
             <p className="text-sm sm:text-base font-light text-surf-white/80 leading-relaxed mb-5 max-w-2xl">
-              {data.videoBannerSubtitle || 'Video analysis isn’t an extra charge here—it’s fundamental to our teaching and your family memories. Our beach team captures crisp telephoto footage so your child can review their pop-up and celebrate every breakthrough.'}
+              Video analysis isn’t an extra charge here—it’s fundamental to our teaching and your family memories. Our beach telephoto team captures crisp high-resolution footage at Playa Guiones so your child can review their pop-up and celebrate every breakthrough.
             </p>
             <div className="flex flex-wrap gap-4 text-xs font-mono text-surf-white/70 mb-6">
-              <span>• 4K/HD Beachside Recording</span>
-              <span>• iPad Slow-Motion Review</span>
+              <span>• 4K Telephoto Beach Recording</span>
+              <span>• iPad Slow-Motion Breakdown</span>
               <span>• Digital Transfer to Your Phone</span>
             </div>
 
@@ -392,12 +438,14 @@ export default function Home() {
           <div className="lg:col-span-5 relative aspect-video max-h-[40vh] overflow-hidden shadow-2xl">
             <img 
               src="https://images.unsplash.com/photo-1528150177508-7cc0c36cda5c?auto=format&fit=crop&q=80" 
-              alt="Video analysis of surfer"
-              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+              alt="Surfer video analysis coaching review in Playa Guiones, Nosara - First Peak Surf"
+              className="w-full h-full object-cover transition-all duration-700"
+              loading="lazy"
+              decoding="async"
             />
             <div className="absolute inset-0 bg-surf-black/40 flex items-center justify-center">
               <div className="w-12 h-12 rounded-full bg-surf-accent/90 text-surf-black flex items-center justify-center pl-0.5 shadow-lg">
-                <Video size={20} />
+                <Play size={20} className="fill-current" />
               </div>
             </div>
             <div className="absolute bottom-2 left-2 right-2 p-2 bg-surf-black/85 backdrop-blur-sm text-surf-white text-[9px] font-mono uppercase tracking-wider flex justify-between">
@@ -408,7 +456,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* 6. Testimonials Section (Light Canvas) - No Boxed Cards */}
+      {/* 6. TESTIMONIALS SECTION (Light Canvas) - EXACT H2 as required */}
       <section 
         id="testimonials" 
         className="section-full bg-surf-white text-surf-black px-6 sm:px-12 py-8 sm:py-10 border-t border-surf-black/10"
@@ -424,45 +472,58 @@ export default function Home() {
             <span className="text-[10px] font-bold uppercase tracking-[0.5em] opacity-40 block mb-1.5">
               Guest Experiences
             </span>
+            {/* EXACT H2 as required */}
             <h2 className="font-display text-3xl sm:text-5xl lg:text-6xl uppercase leading-none">
-              {data.testimonialsTitle || 'What Families Say'}
+              What parents are saying
             </h2>
           </div>
 
-          {/* Clean Open Editorial Quotes */}
+          {/* Clean Open Editorial Quotes in semantic articles */}
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            {(data.testimonials || []).map((item: any, idx: number) => (
-              <div 
-                key={idx} 
-                className="flex flex-col justify-between border-l-2 border-surf-black/20 pl-5"
-              >
-                <div>
-                  <div className="flex gap-1 text-surf-accent mb-2">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={14} fill="currentColor" />
-                    ))}
-                  </div>
-                  <p className="text-sm sm:text-base font-light leading-relaxed italic opacity-85 mb-4">
-                    "{item.quote}"
-                  </p>
+            <article className="flex flex-col justify-between border-l-2 border-surf-black/20 pl-5">
+              <div>
+                <div className="flex gap-1 text-surf-accent mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={14} fill="currentColor" />
+                  ))}
                 </div>
-                <div>
-                  <h4 className="font-bold uppercase tracking-tight text-xs sm:text-sm">{item.parent}</h4>
-                  <span className="text-[10px] font-mono opacity-50">{item.from}</span>
-                </div>
+                <blockquote className="text-sm sm:text-base font-light leading-relaxed italic opacity-85 mb-4">
+                  "Our 7-year-old daughter was terrified of ocean waves when we arrived in Nosara. By the second morning session at Playa Guiones with Coach Bryan, she stood up on six consecutive waves smiling ear to ear. The patience and warmth here are unmatched in Costa Rica."
+                </blockquote>
               </div>
-            ))}
+              <div>
+                <p className="font-bold uppercase tracking-tight text-xs sm:text-sm">Sarah & Mark T.</p>
+                <span className="text-[10px] font-mono opacity-50">Austin, Texas</span>
+              </div>
+            </article>
+
+            <article className="flex flex-col justify-between border-l-2 border-surf-black/20 pl-5">
+              <div>
+                <div className="flex gap-1 text-surf-accent mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={14} fill="currentColor" />
+                  ))}
+                </div>
+                <blockquote className="text-sm sm:text-base font-light leading-relaxed italic opacity-85 mb-4">
+                  "The 1:3 ratio and the video analysis made all the difference. We got to watch the clips back at our hotel and see exactly how our boys improved every day. Truly unforgettable sunset sessions in the Blue Zone."
+                </blockquote>
+              </div>
+              <div>
+                <p className="font-bold uppercase tracking-tight text-xs sm:text-sm">David & Tom K.</p>
+                <span className="text-[10px] font-mono opacity-50">Toronto, Canada</span>
+              </div>
+            </article>
           </div>
 
           <div className="mt-8 text-center">
             <span className="text-[9px] sm:text-[10px] font-mono uppercase tracking-[0.3em] opacity-50">
-              ★ 5.0 Rating on Google & TripAdvisor • 100% Certified Coaches
+              ★ 5.0 Rating on Google & TripAdvisor • 100% Certified Ocean Coaches
             </span>
           </div>
         </motion.div>
       </section>
 
-      {/* 7. Bottom CTA & Footer Section (Dark Canvas) */}
+      {/* 7. BOTTOM CTA & FOOTER SECTION (Dark Canvas) - EXACT H2 as required */}
       <section 
         id="contact" 
         className="section-full bg-surf-black text-surf-white px-6 sm:px-12 pt-12 pb-6 flex flex-col justify-between items-center"
@@ -477,16 +538,17 @@ export default function Home() {
           className="max-w-4xl mx-auto text-center relative z-10 my-auto"
         >
           <span className="text-[10px] uppercase font-mono tracking-[0.6em] text-surf-accent block mb-3">
-            {data.contactPre || 'Direct Connection'}
+            Direct Connection
           </span>
+          {/* EXACT H2 as required */}
           <h2 className="font-display text-4xl sm:text-6xl md:text-7xl uppercase leading-none mb-4">
-            {data.ctaBannerTitle || 'Ready for Your Family’s First Wave?'}
+            Ready for their first wave at sunset?
           </h2>
           <p className="text-sm sm:text-base font-light text-surf-white/80 mb-6 max-w-2xl mx-auto leading-relaxed">
-            {data.ctaBannerText || 'Spaces are limited to ensure strict 1:3 ratios. Reserve your session in Playa Guiones or message us directly on WhatsApp.'}
+            Spaces are strictly limited to protect our 1:3 student-coach ratio in Playa Guiones, Nosara. Reserve your family session or message Coach Bryan directly on WhatsApp for tide times.
           </p>
 
-          {/* Clean Editorial Links without Boxed Buttons */}
+          {/* Clean Editorial Links */}
           <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10">
             <Link 
               to="/booking"
@@ -508,13 +570,13 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Docked Footer */}
+        {/* Semantic Docked Footer */}
         <footer className="w-full pt-4 border-t border-surf-white/10 flex flex-col sm:flex-row justify-between items-center gap-2 text-[9px] uppercase tracking-[0.25em] font-mono text-surf-white/40 max-w-7xl mx-auto">
-          <span>{data.footer1 || '© 2026 First Peak Surf Nosara'}</span>
-          <span>{data.footer2 || 'Playa Guiones, Guanacaste, Costa Rica'}</span>
-          <span>{data.footer3 || 'Where First Waves Become Forever Memories'}</span>
+          <span>© 2026 First Peak Surf Nosara</span>
+          <span>Playa Guiones, Guanacaste, Costa Rica</span>
+          <span>Where First Waves Become Forever Memories</span>
         </footer>
       </section>
-    </>
+    </main>
   );
 }

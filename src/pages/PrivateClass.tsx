@@ -77,8 +77,10 @@ export default function PrivateClass() {
           <div className="lg:col-span-5 relative aspect-[4/5] overflow-hidden border border-surf-white/20 group shadow-2xl">
             <img 
               src={data.heroImage || 'https://images.unsplash.com/photo-1528150177508-7cc0c36cda5c?auto=format&fit=crop&q=80'} 
-              alt="Coach Bryan surfing in Nosara"
-              className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-1000 ease-out"
+              alt="Coach Bryan private surf coaching in Playa Guiones, Nosara - First Peak Surf"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out"
             />
             <div className="absolute top-4 right-4 bg-surf-black/90 px-3 py-1 border border-surf-accent text-[10px] font-mono text-surf-accent uppercase">
               ISA Level 2 Certified
@@ -86,19 +88,19 @@ export default function PrivateClass() {
           </div>
         </div>
 
-        {/* Intro Banner */}
-        <div className="bg-surf-white text-surf-black p-8 sm:p-16 mb-24">
-          <div className="max-w-4xl mx-auto">
-            <span className="text-[10px] uppercase font-mono tracking-[0.4em] opacity-40 block mb-4">
+        {/* Intro Banner - Open Editorial Layout (No card box) */}
+        <div className="py-16 border-t border-b border-surf-white/10 mb-24">
+          <div className="max-w-4xl">
+            <span className="text-[10px] uppercase font-mono tracking-[0.4em] text-surf-accent block mb-4">
               High Impact Coaching
             </span>
-            <h2 className="font-display text-3xl sm:text-5xl uppercase leading-[0.95] mb-6">
+            <h2 className="font-display text-3xl sm:text-5xl uppercase leading-[0.95] mb-6 text-surf-white">
               {data.introTitle || '100% Focused on Your Journey'}
             </h2>
-            <p className="text-base sm:text-lg font-light leading-relaxed opacity-80 mb-8">
+            <p className="text-base sm:text-lg font-light leading-relaxed text-surf-white/80 mb-8">
               {data.introText || 'Whether your child needs gentle one-on-one encouragement to conquer water anxiety, or you are an adult looking to transition from foamies to trimming green waves, our private coaching offers the ultimate customized curriculum.'}
             </p>
-            <div className="grid sm:grid-cols-3 gap-6 pt-6 border-t border-surf-black/10 text-xs font-mono uppercase tracking-wider">
+            <div className="grid sm:grid-cols-3 gap-6 pt-6 border-t border-surf-white/10 text-xs font-mono uppercase tracking-wider text-surf-white/70">
               <div>🎯 3x Faster Progression</div>
               <div>📱 Beach iPad Slow-Mo Review</div>
               <div>🌊 Exact Tide Wave Selection</div>
@@ -106,7 +108,7 @@ export default function PrivateClass() {
           </div>
         </div>
 
-        {/* Benefits Grid */}
+        {/* Benefits Grid - Open Editorial Columns (No boxes/cards) */}
         <div className="mb-24">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-[10px] uppercase font-mono tracking-[0.5em] text-surf-accent block mb-3">
@@ -117,12 +119,12 @@ export default function PrivateClass() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {(data.benefits || []).map((b: any, idx: number) => (
-              <div key={idx} className="border border-surf-white/10 p-8 sm:p-10 bg-surf-black flex flex-col justify-between">
+              <div key={idx} className="border-t border-surf-white/10 pt-6 flex flex-col justify-between">
                 <div>
-                  <span className="font-mono text-xs text-surf-accent block mb-4">0{idx + 1}</span>
-                  <h3 className="text-2xl font-bold uppercase tracking-tight text-surf-white mb-4">
+                  <span className="font-mono text-xs text-surf-accent block mb-3">0{idx + 1}</span>
+                  <h3 className="text-2xl font-bold uppercase tracking-tight text-surf-white mb-3">
                     {b.title}
                   </h3>
                   <p className="text-sm font-light text-surf-white/70 leading-relaxed">
@@ -134,8 +136,8 @@ export default function PrivateClass() {
           </div>
         </div>
 
-        {/* CTA Box */}
-        <div className="p-10 sm:p-16 border-2 border-surf-white/20 bg-surf-black text-center max-w-4xl mx-auto">
+        {/* CTA - Open Section (No box) */}
+        <div className="py-16 border-t border-b border-surf-white/10 text-center max-w-4xl mx-auto">
           <h2 className="font-display text-3xl sm:text-5xl uppercase leading-none mb-4">
             Accelerate Your Surfing with Coach Bryan
           </h2>

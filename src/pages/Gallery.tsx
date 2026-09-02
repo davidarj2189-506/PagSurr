@@ -68,8 +68,10 @@ export default function Gallery() {
           >
             <img 
               src={img} 
-              className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-out" 
-              alt={`Gallery ${i}`} 
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out" 
+              alt={`Kids and family surf lesson moment at sunset in Playa Guiones, Nosara - Photo ${i + 1}`} 
             />
             <div className="absolute inset-0 bg-surf-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <span className="font-display text-2xl uppercase tracking-[0.3em] text-surf-white border border-surf-white/50 px-6 py-3 backdrop-blur-sm">
@@ -123,7 +125,9 @@ export default function Gallery() {
               <div className="relative w-full h-[80vh] flex items-center justify-center">
                 <img 
                   src={data.images[selectedIndex]} 
-                  alt={`Gallery ${selectedIndex + 1}`}
+                  alt={`Surf session in Playa Guiones Nosara - Full photograph ${selectedIndex + 1}`}
+                  loading="lazy"
+                  decoding="async"
                   className="max-w-full max-h-full object-contain shadow-2xl"
                 />
               </div>
