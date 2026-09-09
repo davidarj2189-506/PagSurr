@@ -75,7 +75,7 @@ export default function Faq() {
   };
 
   return (
-    <main className="min-h-screen bg-surf-black text-surf-white pt-32 pb-24 px-6">
+    <main className="min-h-screen bg-surf-white text-surf-black pt-32 pb-24 px-6">
       <SEO 
         title="FAQ & Ocean Safety Guide | First Peak Surf Playa Guiones Nosara"
         description="Comprehensive parent and kids surf FAQ for Playa Guiones, Nosara, Costa Rica. Learn about swimming requirements, gear, sunset session timing, and Blue Zone safety."
@@ -85,26 +85,26 @@ export default function Faq() {
 
       <div className="max-w-5xl mx-auto w-full">
         {/* Breadcrumb navigation */}
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-surf-white/50 mb-6">
-          <Link to="/" className="hover:text-surf-white">Home</Link>
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-surf-black/50 mb-6">
+          <Link to="/" className="hover:text-surf-black">Home</Link>
           <span>/</span>
-          <span className="text-surf-accent">FAQ</span>
+          <span className="text-surf-accent font-semibold">FAQ</span>
         </nav>
 
         {/* Semantic Header */}
         <header className="text-center max-w-3xl mx-auto mb-16">
-          <span className="px-3 py-1 bg-surf-accent/20 border border-surf-accent text-surf-accent text-[10px] font-mono uppercase tracking-[0.3em] inline-block mb-4">
+          <span className="px-3 py-1 bg-surf-accent/20 border border-surf-accent text-surf-black text-[10px] font-mono uppercase tracking-[0.3em] inline-block mb-4 font-semibold">
             Parent Guide & Ocean Safety in Nosara
           </span>
           <motion.h1 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="font-display text-5xl sm:text-7xl uppercase leading-[0.9] text-surf-white mb-6 whitespace-pre-line"
+            className="font-display text-5xl sm:text-7xl uppercase leading-[0.9] text-surf-black mb-6 whitespace-pre-line"
           >
             Frequently Asked Questions
           </motion.h1>
-          <p className="text-base sm:text-lg font-light text-surf-white/75 leading-relaxed">
+          <p className="text-base sm:text-lg font-light text-surf-black/75 leading-relaxed">
             Direct, factual answers regarding kids surf lessons, swimming requirements, ocean safety, gear, and sunset tide windows at Playa Guiones in Nosara, Costa Rica.
           </p>
         </header>
@@ -120,8 +120,8 @@ export default function Faq() {
               }}
               className={`px-4 py-2 text-xs font-mono uppercase tracking-wider transition-all duration-300 border cursor-pointer ${
                 activeCategory === cat.id
-                  ? 'bg-surf-accent text-surf-black border-surf-accent font-bold'
-                  : 'border-surf-white/20 text-surf-white/70 hover:border-surf-white/50'
+                  ? 'bg-surf-black text-surf-white border-surf-black font-bold'
+                  : 'border-surf-black/20 text-surf-black/70 hover:border-surf-black/50'
               }`}
             >
               {cat.label}
@@ -129,33 +129,28 @@ export default function Faq() {
           ))}
         </div>
 
-        {/* Accordion Questions rendered as semantic <article> cards */}
-        <section aria-label="Frequently Asked Questions" className="space-y-4 mb-20">
+        {/* Accordion Questions - Open Editorial Border Dividers (NO BOXES) */}
+        <section aria-label="Frequently Asked Questions" className="border-t border-surf-black/15 mb-24 divide-y divide-surf-black/15">
           {filteredQuestions.map((item, idx) => {
             const isOpen = openIdx === idx;
             return (
-              <article 
-                key={item.q}
-                className={`border transition-colors duration-300 ${
-                  isOpen ? 'border-surf-accent bg-surf-white/5' : 'border-surf-white/15 bg-surf-black hover:border-surf-white/30'
-                }`}
-              >
+              <article key={item.q} className="py-2">
                 <button
                   onClick={() => toggleQuestion(idx)}
-                  className="w-full p-6 sm:p-8 text-left flex justify-between items-center gap-6 cursor-pointer focus:outline-none"
+                  className="w-full py-6 text-left flex justify-between items-center gap-6 cursor-pointer focus:outline-none group"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-display text-lg sm:text-2xl uppercase tracking-tight text-surf-white flex items-center gap-3">
-                    {item.featured && (
-                      <span className="text-[10px] font-mono tracking-widest px-2 py-0.5 bg-surf-accent text-surf-black font-bold uppercase shrink-0">
-                        AEO Key
-                      </span>
-                    )}
-                    <span>{item.q}</span>
+                  <span className={`font-display text-xl sm:text-2xl uppercase tracking-tight transition-colors ${
+                    isOpen ? 'text-surf-accent' : 'text-surf-black group-hover:text-surf-accent'
+                  }`}>
+                    {item.q}
                   </span>
-                  <div className={`w-8 h-8 rounded-full border border-surf-white/30 flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'bg-surf-accent text-surf-black rotate-180 border-surf-accent' : 'text-surf-white'}`}>
-                    <ChevronDown size={18} />
-                  </div>
+                  <ChevronDown 
+                    size={20} 
+                    className={`shrink-0 transition-transform duration-300 ${
+                      isOpen ? 'text-surf-accent rotate-180' : 'text-surf-black/60 group-hover:text-surf-black'
+                    }`} 
+                  />
                 </button>
 
                 <AnimatePresence>
@@ -167,7 +162,7 @@ export default function Faq() {
                       transition={{ duration: 0.3 }}
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-8 sm:px-8 sm:pb-8 pt-0 border-t border-surf-white/10 text-sm sm:text-base font-light text-surf-white/85 leading-relaxed">
+                      <div className="pb-8 text-sm sm:text-base font-light text-surf-black/80 leading-relaxed max-w-3xl">
                         <p>{item.a}</p>
                       </div>
                     </motion.div>
@@ -178,25 +173,25 @@ export default function Faq() {
           })}
         </section>
 
-        {/* Have More Questions Box */}
-        <section aria-label="Direct Coach Connection" className="p-8 sm:p-12 border border-surf-white/15 bg-surf-white/5 flex flex-col sm:flex-row items-center justify-between gap-6">
+        {/* Have More Questions - Open Editorial Section (No box) */}
+        <section aria-label="Direct Coach Connection" className="pt-16 border-t border-surf-black/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
           <div>
-            <h2 className="font-display text-2xl uppercase tracking-tight text-surf-white mb-2">
+            <span className="text-[10px] uppercase font-mono tracking-[0.4em] text-surf-accent font-semibold block mb-2">
+              Personal Attention
+            </span>
+            <h2 className="font-display text-2xl sm:text-4xl uppercase tracking-tight text-surf-black mb-2">
               Still Have a Specific Question?
             </h2>
-            <p className="text-xs sm:text-sm font-light text-surf-white/70">
-              Coach Bryan is available on WhatsApp to discuss current tides in Playa Guiones or answer any custom family questions.
+            <p className="text-sm font-light text-surf-black/70 max-w-xl">
+              We are happy to answer any questions about tides, water safety for younger kids, or custom family lesson configurations.
             </p>
           </div>
-          <a 
-            href="https://wa.me/50688997873?text=Hola%20Bryan!%20I%20have%20a%20question%20before%20booking%20at%20Playa%20Guiones"
-            target="_blank"
-            rel="noreferrer"
-            className="px-6 py-3.5 bg-surf-accent text-surf-black font-bold uppercase text-xs tracking-[0.2em] hover:bg-surf-white transition-colors flex items-center gap-2 whitespace-nowrap"
+          <Link 
+            to="/contact"
+            className="px-8 py-4 bg-surf-black text-surf-white font-bold uppercase text-xs tracking-[0.2em] hover:bg-surf-accent hover:text-surf-black transition-colors shrink-0"
           >
-            <MessageCircle size={16} />
-            <span>Ask Coach Bryan Directly</span>
-          </a>
+            Contact Coach Bryan
+          </Link>
         </section>
       </div>
     </main>

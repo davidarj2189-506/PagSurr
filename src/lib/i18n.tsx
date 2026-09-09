@@ -16,7 +16,7 @@ export const translations: Translations = {
       booking: 'Book a Lesson',
       faq: 'FAQ',
       gallery: 'Gallery',
-      contact: 'Contact & WhatsApp',
+      contact: 'Contact',
       us: 'Our Story',
       service: 'All Services',
       blog: 'Surf Guide'
@@ -283,38 +283,72 @@ export const translations: Translations = {
       ctaBtn: 'Book 1-on-1 Session'
     },
     about: {
-      badge: 'Nosara Waterman & Educator',
+      badge: 'Nosara Waterman & Educator • Over 12 Years Coaching',
       title: 'Meet Coach\nBryan',
-      subtitle: 'Founder, certified lifeguard, and passionate surf mentor for the next generation.',
+      subtitle: 'Founder, certified ocean lifeguard, and passionate surf mentor shaping the next generation in Nosara.',
       heroImage: 'https://images.unsplash.com/photo-1528150177508-7cc0c36cda5c?auto=format&fit=crop&q=80',
-      bio1: 'Born and raised with the ocean as his backyard in Guanacaste, Bryan has spent over two decades surfing the Pacific breaks of Costa Rica. For the past 12 years, he has dedicated his life to teaching—specializing in children and nervous beginners who need more than just technique: they need trust.',
-      bio2: 'Bryan founded First Peak Surf with a simple belief: every child’s first experience with the ocean should be safe, magical, and empowering. By limiting class sizes to a maximum of 3 students per coach and incorporating video feedback, he ensures no child is ever overlooked.',
-      certificationsTitle: 'Safety Credentials & Certifications',
+      stats: [
+        { label: 'Pacific Ocean Surfing', value: '20+ Years' },
+        { label: 'Full-Time Surf Coach', value: '12+ Years' },
+        { label: 'Student-to-Coach Ratio', value: '1:3 Max' },
+        { label: 'Official Certifications', value: 'ISA L2 & Lifeguard' }
+      ],
+      bioIntro: 'Born with the warm waters of Guanacaste as his backyard, Bryan has dedicated his life to the art of surfing and the deep joy of passing it forward. His coaching goes far beyond simply standing on a board—it is about cultivating genuine water confidence, ocean literacy, and lifelong respect for the sea.',
+      chapters: [
+        {
+          num: '01',
+          title: 'Ocean Roots in Guanacaste',
+          subtitle: 'Growing up with the rhythm of the tides',
+          text: 'Bryan was born and raised along the Pacific coastline of Guanacaste. Long before Nosara became an international surfing destination, Bryan was learning to read the subtle nuances of Playa Guiones—how the sandbars shift with the seasonal rains, how the offshore winds groom the morning faces, and how to stay completely calm in heavy Pacific surf. The ocean was not an occasional hobby; it was his sanctuary and classroom.'
+        },
+        {
+          num: '02',
+          title: 'The Calling: From Freesurfer to Mentor',
+          subtitle: 'Discovering true fulfillment in teaching',
+          text: 'After competing in national circuits and freesurfing pristine point breaks across Costa Rica and Central America, Bryan discovered that his deepest fulfillment did not come from riding waves alone. It came from witnessing the sheer joy in someone’s eyes when they catch their very first wave. Recognizing that traditional commercial surf schools frequently push large, unsafe groups into the whitewash without personal care, Bryan founded First Peak Surf with an uncompromising commitment: intimate, safety-first coaching centered on the human connection.'
+        },
+        {
+          num: '03',
+          title: 'Specializing in Groms & Overcoming Fear',
+          subtitle: 'Patience, empathy, and positive reinforcement',
+          text: 'Working with young children (groms) and nervous beginners requires emotional intelligence, patience, and clear pedagogy. Over the past 12 years, Bryan has honed an encouraging teaching philosophy. For children, balance and pop-ups are taught through engaging, playful beach games, with Bryan staying directly beside them on every single wave. For adults holding onto water apprehension or past bad experiences, Bryan provides calm breathwork, wave mechanics breakdown, and unwavering physical support until hesitation turns into pure euphoria.'
+        },
+        {
+          num: '04',
+          title: 'Modern Biomechanics & Video Analysis',
+          subtitle: 'Tide-optimized sessions and frame-by-frame review',
+          text: 'Bryan pairs local ocean intuition with modern sports science. Every lesson is scheduled strictly around the ideal daily tide and wind windows. Immediately after exiting the surf, Bryan and his students review slow-motion video footage under our shaded beach tent. Breaking down stance, eye focus, hip rotation, and board trim in slow motion locks in muscle memory rapidly, allowing surfers to progress more in a single morning than in weeks of unguided practice.'
+        }
+      ],
+      quote: "Surfing isn’t about conquering the ocean. It’s about listening to it, respecting its power, and finding your own flow in the water.",
+      quoteAuthor: "Coach Bryan • Founder & Head Instructor, First Peak Surf",
+      certificationsTitle: 'Official Credentials & Safety Certifications',
       certs: [
         'ISA (International Surfing Association) Level 2 Surf Coach',
         'Pediatric & Adult CPR / AED Certified (Red Cross Costa Rica)',
         'Professional Ocean Lifeguard (Nosara Lifeguards Association)',
-        'Child Psychology in Sports Fundamentals Training',
-        'Ostional Wildlife Refuge Eco-Guide Certified'
+        'Sports Child Psychology & Motor Skills Development Certified',
+        'Ostional Wildlife Refuge & Marine Conservation Certified Eco-Guide',
+        'Advanced Surf Biomechanics & Video Motion Analysis Specialist'
       ],
-      philosophyTitle: 'The First Peak Philosophy',
+      philosophyTitle: 'Bryan’s Core Principles in the Water',
       philosophies: [
         {
+          title: 'Safety is Absolute',
+          desc: 'We never compromise on safety. Maximum 3 students per coach, certified ocean lifeguards in the water, soft-edge buoyant boards, and complete hands-on presence on every wave.'
+        },
+        {
           title: 'Empowerment Over Ego',
-          desc: 'We never push a child beyond their comfort zone. Confidence is built wave by wave through encouragement, patience, and clear communication.'
+          desc: 'No rushing, no yelling, no pressure. True water confidence is forged through encouragement, patience, and celebrating each milestone.'
         },
         {
-          title: 'The Blue Zone Lifestyle',
-          desc: 'Nosara is one of the world’s rare Blue Zones. We embrace healthy living, clean eating, mindful breathing, and deep respect for our marine environment.'
-        },
-        {
-          title: 'Community Roots',
-          desc: 'First Peak Surf supports local community beach cleanups and sponsors surf clinics for local Guanacaste youth throughout the year.'
+          title: 'Pura Vida & Marine Stewardship',
+          desc: 'Playa Guiones is a pristine coastal sanctuary. We instill in every student a deep reverence for nature, marine life, and keeping our beaches clean.'
         }
       ],
-      ctaTitle: 'Come Surf with Bryan',
-      ctaText: 'Experience the magic of Playa Guiones through the eyes of someone who truly loves sharing the waves.',
-      ctaBtn: 'Book with Bryan'
+      ctaTitle: 'Train with Coach Bryan',
+      ctaText: 'Whether you want your child to fall in love with the ocean safely or you are looking to elevate your own wave count with 1-on-1 coaching, Bryan is here to guide your journey.',
+      ctaBtn: 'Book Session with Bryan'
     },
     booking: {
       badge: 'Easy Online Scheduling',
@@ -567,7 +601,7 @@ export const translations: Translations = {
       booking: 'Reservar',
       faq: 'Preguntas Frecuentes',
       gallery: 'Galería',
-      contact: 'Contacto y WhatsApp',
+      contact: 'Contacto',
       us: 'Nuestra Historia',
       service: 'Todos los Servicios',
       blog: 'Guía de Surf'
@@ -834,38 +868,72 @@ export const translations: Translations = {
       ctaBtn: 'Reservar Sesión 1-a-1'
     },
     about: {
-      badge: 'Waterman de Nosara y Educador',
+      badge: 'Waterman de Nosara y Educador • Más de 12 Años de Experiencia',
       title: 'Conoce al Coach\nBryan',
-      subtitle: 'Fundador, salvavidas certificado y apasionado mentor de surf para las nuevas generaciones.',
+      subtitle: 'Fundador, salvavidas certificado y apasionado mentor de surf para las nuevas generaciones en Nosara.',
       heroImage: 'https://images.unsplash.com/photo-1528150177508-7cc0c36cda5c?auto=format&fit=crop&q=80',
-      bio1: 'Nacido y criado con el Pacífico como patio trasero en Guanacaste, Bryan lleva más de dos décadas surfeando las costas de Costa Rica. Durante los últimos 12 años, ha dedicado su vida a la enseñanza, especializándose en niños y personas que necesitan más que técnica: necesitan confianza.',
-      bio2: 'Bryan fundó First Peak Surf con una convicción clara: la primera experiencia de un niño en el océano debe ser segura, mágica y empoderadora. Al limitar las clases a un ratio máximo de 3 alumnos por instructor y sumar análisis en video, asegura que ningún niño quede desatendido.',
-      certificationsTitle: 'Credenciales y Certificaciones de Seguridad',
+      stats: [
+        { label: 'Surfeando el Pacífico', value: '20+ Años' },
+        { label: 'Coach Profesional de Surf', value: '12+ Años' },
+        { label: 'Ratio Alumno-Coach', value: 'Máx 1:3' },
+        { label: 'Certificaciones', value: 'ISA L2 y Salvavidas' }
+      ],
+      bioIntro: 'Nacido con las cálidas olas de Guanacaste como patio trasero, Bryan ha dedicado su vida adulta al surf y al arte de transmitirlo con amor, paciencia y técnica. Su pedagogía va mucho más allá de atrapar olas: se enfoca en forjar confianza inquebrantable, entendimiento del mar y respeto mutuo.',
+      chapters: [
+        {
+          num: '01',
+          title: 'Raíces en el Océano Pacífico de Guanacaste',
+          subtitle: 'Creciendo al compás de las mareas de Nosara',
+          text: 'Bryan nació y creció en las costas de Guanacaste, Costa Rica. Mucho antes de que Nosara se convirtiera en un destino internacional de surf, Bryan ya aprendía a descifrar los secretos de Playa Guiones: cómo cambian los bancos de arena con las lluvias, cómo el viento terral peina las olas al amanecer y cómo mantener la calma frente a las corrientes del Pacífico. El océano no era un deporte de fin de semana, era su hogar y su escuela de vida.'
+        },
+        {
+          num: '02',
+          title: 'La Vocación: De Freesurfer a Formador',
+          subtitle: 'Descubriendo el verdadero propósito en la enseñanza',
+          text: 'Tras competir en circuitos nacionales y recorrer olas remotas de Centroamérica, Bryan descubrió que su mayor satisfacción no estaba en correr olas solo, sino en ver el brillo en los ojos de un niño al pararse por primera vez en su tabla. Notó que las escuelas tradicionales solían meter grupos masivos al agua sin cuidar la seguridad ni la conexión humana. Por eso fundó First Peak Surf: para ofrecer una enseñanza boutique, cercana y con los más estrictos estándares de seguridad y confianza.'
+        },
+        {
+          num: '03',
+          title: 'Especialización en Niños y Superación del Miedo',
+          subtitle: 'Paciencia, pedagogía y refuerzo positivo',
+          text: 'Enseñar a niños pequeños (groms) y a principiantes con temor al agua requiere empatía e inteligencia emocional. Durante más de 12 años, Bryan ha perfeccionado una pedagogía donde el aprendizaje se convierte en un juego estimulante. Para los niños, está al lado de ellos en cada ola sosteniendo la tabla y guiando el pop-up. Para adultos nerviosos, enseña respiración consciente, lectura de corrientes y calma para transformar el miedo en pura alegría.'
+        },
+        {
+          num: '04',
+          title: 'Metodología Moderna y Análisis en Video',
+          subtitle: 'Biomecánica, tiempos de marea y corrección inmediata',
+          text: 'Bryan combina la intuición del surfista local con la biomecánica deportiva moderna. Cada sesión se planifica según la marea ideal. Al salir del agua, Bryan revisa con sus alumnos los videos en cámara lenta en la playa bajo la sombra, analizando la postura de los pies, la rotación de caderas y la mirada. Esta retroalimentación visual acelera el aprendizaje en pocas sesiones.'
+        }
+      ],
+      quote: "El surf no se trata de dominar al océano. Se trata de escucharlo, respetar su energía y encontrar tu propio fluir en la ola.",
+      quoteAuthor: "Coach Bryan • Fundador y Head Instructor, First Peak Surf",
+      certificationsTitle: 'Credenciales Oficiales y Certificaciones de Seguridad',
       certs: [
         'Entrenador de Surf Nivel 2 ISA (International Surfing Association)',
         'Certificación en RCP Pediátrico y Adultos / DEA (Cruz Roja Costarricense)',
         'Salvavidas Profesional de Océano (Asociación de Salvavidas de Nosara)',
-        'Capacitación en Psicología Infantil aplicada al Deporte',
-        'Guía Ecológico Certificado del Refugio de Vida Silvestre Ostional'
+        'Capacitación en Psicología Infantil y Habilidades Motrices en el Deporte',
+        'Guía Ecológico Certificado del Refugio de Vida Silvestre Ostional',
+        'Especialista en Biomecánica del Surf y Videoanálisis Deportivo'
       ],
-      philosophyTitle: 'La Filosofía de First Peak',
+      philosophyTitle: 'Los Principios del Coach Bryan en el Agua',
       philosophies: [
         {
+          title: 'La Seguridad es Innegociable',
+          desc: 'Nunca comprometemos la seguridad. Máximo 3 alumnos por coach, salvavidas certificados en el agua, tablas de bordes suaves y supervisión directa en cada ola.'
+        },
+        {
           title: 'Empoderamiento sin Ego',
-          desc: 'Nunca forzamos a un niño más allá de su zona de comodidad. La confianza se forja ola por ola con paciencia, empatía y comunicación clara.'
+          desc: 'Cero gritos, cero prisas y cero presiones. La verdadera confianza se construye celebrando cada pequeño avance con paciencia y empatía.'
         },
         {
-          title: 'Estilo de Vida de la Zona Azul',
-          desc: 'Nosara es una de las raras Zonas Azules del mundo. Fomentamos la vida saludable, el aire puro y el respeto sagrado por el mar.'
-        },
-        {
-          title: 'Raíces Comunitarias',
-          desc: 'First Peak Surf organiza limpiezas de playa locales y patrocina clínicas de surf para niños de la comunidad de Guanacaste.'
+          title: 'Pura Vida y Cuidado del Entorno',
+          desc: 'Playa Guiones es un santuario natural. Fomentamos en cada alumno el respeto sagrado por el mar, las tortugas de Ostional y las playas limpias.'
         }
       ],
-      ctaTitle: 'Ven a Surfear con Bryan',
-      ctaText: 'Descubre la magia de Playa Guiones de la mano de un local apasionado por transmitir el amor al océano.',
-      ctaBtn: 'Reservar con Bryan'
+      ctaTitle: 'Entrena con el Coach Bryan',
+      ctaText: 'Ya sea que quieras que tus hijos descubran el océano de forma segura o que busques mejorar tu nivel técnico con coaching privado 1-a-1, Bryan te acompañará en cada paso.',
+      ctaBtn: 'Reservar Clase con Bryan'
     },
     booking: {
       badge: 'Reserva Rápida y Fácil',

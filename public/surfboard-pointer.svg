@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <filter id="surf-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0.5" dy="1" stdDeviation="1.2" flood-color="#FF4E00" flood-opacity="0.8"/>
+    </filter>
+  </defs>
+  <g transform="translate(-5, -3) rotate(-42 16 16)" filter="url(#surf-glow)">
+    <!-- Surfboard Deck Outline & Body (First Peak Orange) -->
+    <path d="M 16,2 C 20.8,8 21.8,17 18.2,28.8 C 17.2,29.8 14.8,29.8 13.8,28.8 C 10.2,17 11.2,8 16,2 Z" 
+          fill="#FF4E00" stroke="#FFFFFF" stroke-width="1.2" stroke-linejoin="round"/>
+    <!-- Center Stringer (White) -->
+    <path d="M 16,3 L 16,28.5" stroke="#FFFFFF" stroke-width="0.8" stroke-linecap="round"/>
+    <!-- Stripes (Dark contrast) -->
+    <path d="M 12.8,11 Q 16,13 19.2,11" stroke="#111111" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <path d="M 13.5,13.2 Q 16,15 18.5,13.2" stroke="#111111" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+    <!-- Tail Pad -->
+    <path d="M 14.2,24 L 17.8,24 L 17.2,27.8 L 14.8,27.8 Z" fill="#FFFFFF"/>
+    <!-- Nose Tip Highlight -->
+    <circle cx="16" cy="3" r="0.8" fill="#FFFFFF"/>
+  </g>
+  <!-- Mini Action Glow at tip -->
+  <circle cx="3" cy="3" r="1.5" fill="#FFD700" opacity="0.95"/>
+</svg>

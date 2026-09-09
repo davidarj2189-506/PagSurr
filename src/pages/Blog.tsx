@@ -129,10 +129,10 @@ export default function Blog() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="p-8 md:p-12 bg-surf-black text-surf-white"
+            className="py-10 border-t border-b border-surf-black/15 text-surf-black"
           >
-            <h3 className="mb-4 text-surf-accent">{content.h3_4}</h3>
-            <p className="opacity-80 m-0">{content.p_4}</p>
+            <h3 className="mb-4 text-surf-accent font-bold uppercase tracking-tight">{content.h3_4}</h3>
+            <p className="text-surf-black/80 leading-relaxed m-0 font-light">{content.p_4}</p>
           </motion.div>
 
         </article>

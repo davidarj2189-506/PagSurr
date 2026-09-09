@@ -1,31 +1,36 @@
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
-import { ArrowRight, Waves, MessageCircle, Star, ChevronDown, Check, Play } from 'lucide-react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
+import { ArrowRight, Waves, MessageCircle, Star, ChevronDown, Check, Play, Camera, MapPin, ChevronLeft, ChevronRight, X, Sparkles, ZoomIn } from 'lucide-react';
 import { useLanguage } from '../lib/i18n';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { getHomePageSchema } from '../utils/schemaGenerator';
+import { POLAROID_GALLERY, PolaroidPhoto } from '../data/polaroids';
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const data = t('home') || {};
+  const [activePolaroidIndex, setActivePolaroidIndex] = useState(0);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
 
-  const { scrollYProgress } = useScroll();
-
   const sections = [
-    { id: 'hero', name: 'Intro' },
-    { id: 'philosophy', name: 'Philosophy' },
-    { id: 'programs', name: 'Programs' },
-    { id: 'differentiators', name: 'Why Us' },
-    { id: 'video-analysis', name: 'Video' },
-    { id: 'testimonials', name: 'Reviews' },
-    { id: 'contact', name: 'Reserve' }
+    { id: 'hero', name: 'Intro', isDark: true },
+    { id: 'philosophy', name: 'Philosophy', isDark: false },
+    { id: 'programs', name: 'Programs', isDark: false },
+    { id: 'differentiators', name: 'Why Us', isDark: true },
+    { id: 'gallery', name: language === 'en' ? 'Polaroids' : 'Polaroids', isDark: true },
+    { id: 'testimonials', name: 'Reviews', isDark: false },
+    { id: 'contact', name: 'Reserve', isDark: true }
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPos = window.scrollY + window.innerHeight / 3;
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60) {
+        setActiveSection(sections.length - 1);
+        return;
+      }
+      const scrollPos = window.scrollY + window.innerHeight / 2;
       sections.forEach((sec, idx) => {
         const el = document.getElementById(sec.id);
         if (el) {
@@ -39,8 +44,11 @@ export default function Home() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const { scrollYProgress } = useScroll();
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -98,32 +106,43 @@ export default function Home() {
         schemaData={getHomePageSchema()}
       />
 
-      {/* Modern Editorial Dot Navigation */}
-      <nav aria-label="Page navigation" className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-3">
-        {sections.map((sec, idx) => (
-          <button
-            key={sec.id}
-            onClick={() => scrollTo(sec.id)}
-            className="group flex items-center justify-end gap-2 focus:outline-none cursor-pointer"
-            aria-label={`Scroll to ${sec.name}`}
-          >
-            <span 
-              className={`text-[9px] uppercase tracking-widest font-mono transition-all duration-300 opacity-0 group-hover:opacity-100 ${
-                activeSection === idx ? 'text-surf-accent opacity-100' : 'text-surf-white/60'
-              }`}
-            >
-              {sec.name}
-            </span>
-            <div 
-              className={`w-1.5 transition-all duration-300 ${
-                activeSection === idx 
-                  ? 'h-6 bg-surf-accent' 
-                  : 'h-1.5 bg-surf-white/30 group-hover:bg-surf-white group-hover:h-3'
-              }`} 
-            />
-          </button>
-        ))}
-      </nav>
+      {/* Modern Editorial Dot Navigation on Right Edge */}
+      {(() => {
+        const isCurrentDark = sections[activeSection]?.isDark ?? true;
+        return (
+          <nav aria-label="Page navigation" className="fixed right-4 sm:right-6 top-1/2 -translate-y-1/2 z-40 hidden md:flex flex-col gap-3">
+            {sections.map((sec, idx) => (
+              <button
+                key={sec.id}
+                onClick={() => scrollTo(sec.id)}
+                className="group flex items-center justify-end gap-2 focus:outline-none cursor-pointer py-0.5"
+                aria-label={`Scroll to ${sec.name}`}
+              >
+                <span 
+                  className={`text-[9px] uppercase tracking-widest font-mono transition-all duration-300 ${
+                    activeSection === idx 
+                      ? 'text-surf-accent opacity-100 font-bold' 
+                      : isCurrentDark 
+                        ? 'text-surf-white/70 opacity-0 group-hover:opacity-100' 
+                        : 'text-surf-black/80 opacity-0 group-hover:opacity-100 font-medium'
+                  }`}
+                >
+                  {sec.name}
+                </span>
+                <div 
+                  className={`w-1.5 transition-all duration-300 ${
+                    activeSection === idx 
+                      ? 'h-6 bg-surf-accent rounded-none' 
+                      : isCurrentDark
+                        ? 'h-1.5 bg-surf-white/35 group-hover:bg-surf-white group-hover:h-3 rounded-none'
+                        : 'h-1.5 bg-surf-black/40 group-hover:bg-surf-black group-hover:h-3 rounded-none'
+                  }`} 
+                />
+              </button>
+            ))}
+          </nav>
+        );
+      })()}
 
       {/* 1. HERO SECTION (Dark Canvas) - Surf Magazine Editorial Layout */}
       <header 
@@ -181,15 +200,13 @@ export default function Home() {
                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
               </Link>
 
-              <a 
-                href="https://wa.me/50688997873?text=Hola%20Bryan!%20I%20would%20like%20to%20inquire%20about%20surf%20lessons%20in%20Nosara"
-                target="_blank"
-                rel="noreferrer"
+              <Link 
+                to="/contact"
                 className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-surf-white/80 hover:text-surf-accent border-b border-surf-white/30 hover:border-surf-accent pb-1 transition-all inline-flex items-center gap-2 group"
               >
-                <MessageCircle size={14} className="text-surf-accent" />
-                <span>{data.ctaWhatsappBtn || 'WhatsApp Us'}</span>
-              </a>
+                <span>Contact Coach Bryan</span>
+                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -242,17 +259,19 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-[4/3] max-h-[42vh] w-full overflow-hidden shadow-xl">
-            <img 
-              src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80" 
-              className="w-full h-full object-cover hover:scale-105 transition-all duration-1000 ease-out" 
-              alt="Kids surf lesson at sunset in Playa Guiones, Nosara - First Peak Surf"
-              loading="lazy"
-              decoding="async"
-            />
-            <div className="absolute bottom-3 left-3 right-3 p-2.5 bg-surf-black/90 text-surf-white backdrop-blur-sm border-l-2 border-surf-accent">
-              <p className="text-[9px] font-mono tracking-widest uppercase opacity-60">Playa Guiones • Blue Zone Costa Rica</p>
-              <p className="text-xs font-semibold mt-0.5">"The safest sand-bottom surf classroom on earth."</p>
+          <div className="flex flex-col">
+            <div className="relative aspect-[16/10] sm:aspect-[4/3] lg:aspect-[4/3] max-h-[42vh] w-full overflow-hidden shadow-xl">
+              <img 
+                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80" 
+                className="w-full h-full object-cover hover:scale-105 transition-all duration-1000 ease-out" 
+                alt="Kids surf lesson at sunset in Playa Guiones, Nosara - First Peak Surf"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <div className="pt-2.5 flex justify-between items-center text-[10px] font-mono text-surf-black/60 uppercase tracking-widest border-t border-surf-black/10 mt-2">
+              <span>Playa Guiones • Blue Zone</span>
+              <span>Safe Sand-Bottom Waves</span>
             </div>
           </div>
         </motion.div>
@@ -408,62 +427,277 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* 5. VIDEO ANALYSIS SECTION (Dark Canvas) */}
+      {/* 5. POLAROID RETRO GALLERY SECTION (Dark Canvas) */}
       <section 
-        id="video-analysis" 
-        className="section-full bg-surf-black text-surf-white px-6 sm:px-12 py-8 sm:py-10 border-t border-surf-white/10"
+        id="gallery" 
+        className="section-full bg-surf-black text-surf-white px-4 sm:px-8 lg:px-12 py-3 sm:py-6 border-t border-surf-white/10"
       >
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.25 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-8 lg:gap-14 items-center my-auto"
+          className="max-w-7xl mx-auto w-full grid lg:grid-cols-12 gap-6 lg:gap-10 items-center my-auto"
         >
-          <div className="lg:col-span-7">
-            <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.4em] text-surf-accent block mb-2">
-              Included in Every Session
-            </span>
-            <div className="font-display text-3xl sm:text-5xl lg:text-6xl uppercase leading-none mb-4">
-              {data.videoBannerTitle || 'See the Joy in Action'}
-            </div>
-            <p className="text-sm sm:text-base font-light text-surf-white/80 leading-relaxed mb-5 max-w-2xl">
-              Video analysis isn’t an extra charge here—it’s fundamental to our teaching and your family memories. Our beach telephoto team captures crisp high-resolution footage at Playa Guiones so your child can review their pop-up and celebrate every breakthrough.
-            </p>
-            <div className="flex flex-wrap gap-4 text-xs font-mono text-surf-white/70 mb-6">
-              <span>• 4K Telephoto Beach Recording</span>
-              <span>• iPad Slow-Motion Breakdown</span>
-              <span>• Digital Transfer to Your Phone</span>
+          {/* Left Column: Reduced, Clean & Minimal Editorial Info */}
+          <div className="lg:col-span-5 flex flex-col justify-center">
+            <div className="inline-flex items-center gap-2 text-surf-accent text-[10px] sm:text-xs font-mono uppercase tracking-[0.3em] mb-2">
+              <Camera size={14} className="text-surf-accent" />
+              <span>{language === 'en' ? 'Polaroid Archive • Nosara' : 'Archivo Polaroid • Nosara'}</span>
             </div>
 
-            <Link 
-              to="/booking"
-              className="text-xs sm:text-sm font-bold uppercase tracking-[0.2em] text-surf-accent hover:text-surf-white border-b-2 border-surf-accent hover:border-surf-white pb-1 transition-colors inline-flex items-center gap-2 group"
-            >
-              <span>Book with Free Video</span>
-              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl uppercase leading-[0.95] mb-3 text-surf-white">
+              {language === 'en' ? 'Real Smiles. Pure Polaroid Memories.' : 'Sonrisas Reales. Recuerdos Polaroid.'}
+            </h2>
+
+            <p className="text-xs sm:text-sm font-light text-surf-white/75 leading-relaxed mb-5 max-w-md">
+              {language === 'en'
+                ? 'Every session at First Peak is captured on instant film. Timeless memories of your kids and family catching their first waves in Playa Guiones.'
+                : 'Cada sesión en First Peak queda grabada en papel instantáneo. Recuerdos inolvidables de tus hijos y familia surfeando sus primeras olas en Playa Guiones.'}
+            </p>
+
+            {/* CTAs */}
+            <div className="flex items-center gap-4">
+              <Link 
+                to="/gallery"
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-surf-accent text-surf-black font-mono font-bold text-xs uppercase tracking-widest hover:bg-surf-white transition-all shadow-lg cursor-pointer"
+              >
+                <Camera size={14} />
+                <span>{language === 'en' ? 'Explore Gallery' : 'Ver Galería'}</span>
+                <ArrowRight size={14} />
+              </Link>
+              <Link
+                to="/booking"
+                className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-widest text-surf-white/80 hover:text-surf-accent border-b border-surf-white/30 hover:border-surf-accent pb-1 transition-colors"
+              >
+                <span>{language === 'en' ? 'Book a Session' : 'Reservar Clase'}</span>
+              </Link>
+            </div>
           </div>
 
-          <div className="lg:col-span-5 relative aspect-video max-h-[40vh] overflow-hidden shadow-2xl">
-            <img 
-              src="https://images.unsplash.com/photo-1528150177508-7cc0c36cda5c?auto=format&fit=crop&q=80" 
-              alt="Surfer video analysis coaching review in Playa Guiones, Nosara - First Peak Surf"
-              className="w-full h-full object-cover transition-all duration-700"
-              loading="lazy"
-              decoding="async"
-            />
-            <div className="absolute inset-0 bg-surf-black/40 flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-surf-accent/90 text-surf-black flex items-center justify-center pl-0.5 shadow-lg">
-                <Play size={20} className="fill-current" />
-              </div>
-            </div>
-            <div className="absolute bottom-2 left-2 right-2 p-2 bg-surf-black/85 backdrop-blur-sm text-surf-white text-[9px] font-mono uppercase tracking-wider flex justify-between">
-              <span>Beach Telephoto Angle</span>
-              <span className="text-surf-accent">● LIVE RECORD</span>
-            </div>
+          {/* Right Column: Natural Editorial Polaroid Stack with Flanking External Arrows */}
+          <div className="lg:col-span-7 flex flex-col items-center justify-center">
+            {(() => {
+              const list = POLAROID_GALLERY;
+              const total = list.length;
+              const cardTop = list[activePolaroidIndex % total];
+              const cardLeft = list[(activePolaroidIndex + 1) % total];
+              const cardRight = list[(activePolaroidIndex + 2) % total];
+
+              return (
+                <div className="relative w-full max-w-[540px] flex items-center justify-center">
+                  {/* Left Arrow Button (Clean editorial arrow without circular enclosure) */}
+                  <button
+                    type="button"
+                    onClick={() => setActivePolaroidIndex((prev) => (prev > 0 ? prev - 1 : total - 1))}
+                    className="group absolute -left-4 sm:-left-8 md:-left-12 lg:-left-14 top-1/2 -translate-y-1/2 z-30 p-2 text-surf-white/50 hover:text-surf-accent transition-all duration-200 cursor-pointer focus:outline-none"
+                    title={language === 'en' ? 'Previous photo' : 'Foto anterior'}
+                    aria-label="Previous Polaroid"
+                  >
+                    <ChevronLeft size={34} strokeWidth={1.5} className="group-hover:-translate-x-1 group-hover:scale-110 transition-all duration-200" />
+                  </button>
+
+                  {/* Stack Container with overlapping layers */}
+                  <div className="relative w-full max-w-[440px] h-[330px] sm:h-[370px] md:h-[390px] flex items-center justify-center select-none">
+                    
+                    {/* Left Background Polaroid */}
+                    <div 
+                      onClick={() => setActivePolaroidIndex((activePolaroidIndex + 1) % total)}
+                      className="group/left absolute top-3 sm:top-5 -left-2 sm:left-4 md:left-6 w-[200px] sm:w-[230px] md:w-[250px] bg-[#FAF8F5] text-neutral-900 p-2.5 sm:p-3 pb-5 sm:pb-6 shadow-[0_12px_30px_rgba(0,0,0,0.85)] -rotate-6 sm:-rotate-8 scale-[0.88] hover:scale-[0.93] hover:-rotate-10 hover:z-30 cursor-pointer transition-all duration-300 border border-[#E5E0D8] rounded-[2px] z-10 opacity-75 hover:opacity-100"
+                      title={language === 'en' ? 'Click to bring to front' : 'Haz clic para traer al frente'}
+                    >
+                      {/* Washi Tape */}
+                      <div className="absolute -top-2 left-1/3 -translate-x-1/2 w-11 sm:w-13 h-3 sm:h-3.5 bg-[#e8deca]/90 border border-[#d3c5ab] -rotate-3 pointer-events-none shadow-xs" />
+                      
+                      <div className="relative aspect-square w-full bg-neutral-950 overflow-hidden shadow-inner border border-black/10">
+                        <img
+                          src={cardLeft.url}
+                          alt=""
+                          className="w-full h-full object-cover sepia-[0.16] brightness-[0.95]"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="pt-2 px-1">
+                        <p className="text-[10px] sm:text-xs font-serif italic text-neutral-800 truncate" style={{ fontFamily: 'Georgia, serif' }}>
+                          "{language === 'en' ? cardLeft.captionEn : cardLeft.captionEs}"
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Right Background Polaroid */}
+                    <div 
+                      onClick={() => setActivePolaroidIndex((activePolaroidIndex + 2) % total)}
+                      className="group/right absolute top-5 sm:top-7 -right-2 sm:right-4 md:right-6 w-[200px] sm:w-[230px] md:w-[250px] bg-[#FAF8F5] text-neutral-900 p-2.5 sm:p-3 pb-5 sm:pb-6 shadow-[0_12px_30px_rgba(0,0,0,0.85)] rotate-6 sm:rotate-8 scale-[0.88] hover:scale-[0.93] hover:rotate-10 hover:z-30 cursor-pointer transition-all duration-300 border border-[#E5E0D8] rounded-[2px] z-10 opacity-75 hover:opacity-100"
+                      title={language === 'en' ? 'Click to bring to front' : 'Haz clic para traer al frente'}
+                    >
+                      {/* Washi Tape */}
+                      <div className="absolute -top-2 right-1/4 w-11 sm:w-13 h-3 sm:h-3.5 bg-[#e8deca]/90 border border-[#d3c5ab] rotate-2 pointer-events-none shadow-xs" />
+
+                      <div className="relative aspect-square w-full bg-neutral-950 overflow-hidden shadow-inner border border-black/10">
+                        <img
+                          src={cardRight.url}
+                          alt=""
+                          className="w-full h-full object-cover sepia-[0.16] brightness-[0.95]"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="pt-2 px-1">
+                        <p className="text-[10px] sm:text-xs font-serif italic text-neutral-800 truncate" style={{ fontFamily: 'Georgia, serif' }}>
+                          "{language === 'en' ? cardRight.captionEn : cardRight.captionEs}"
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Foreground Featured Polaroid */}
+                    <div 
+                      className="group relative w-[230px] sm:w-[260px] md:w-[285px] bg-[#FAF8F5] text-neutral-900 p-3 sm:p-3.5 pb-5 sm:pb-6 shadow-[0_20px_45px_rgba(0,0,0,0.92)] hover:shadow-[0_25px_55px_rgba(0,0,0,0.98)] rotate-[-1deg] hover:rotate-0 hover:scale-[1.02] transition-all duration-300 ease-out border border-[#E5E0D8] rounded-[2px] z-20"
+                    >
+                      {/* Vintage Washi Tape */}
+                      <div className={`absolute z-30 w-13 sm:w-15 h-3.5 sm:h-4 bg-[#e8deca]/95 border border-[#d3c5ab] backdrop-blur-[1px] shadow-xs pointer-events-none opacity-90 group-hover:opacity-100 transition-opacity ${cardTop.tapeStyle}`} />
+
+                      {/* 1:1 Square Photo with Vintage Grading */}
+                      <div 
+                        onClick={() => setIsLightboxOpen(true)}
+                        className="relative aspect-square w-full bg-neutral-950 overflow-hidden shadow-inner border border-black/10 cursor-pointer"
+                      >
+                        <img
+                          src={cardTop.url}
+                          alt={language === 'en' ? cardTop.captionEn : cardTop.captionEs}
+                          className="w-full h-full object-cover sepia-[0.12] contrast-[1.05] brightness-[0.98] group-hover:sepia-0 group-hover:scale-105 transition-all duration-500 ease-out"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-transparent to-orange-400/10 pointer-events-none" />
+
+                        {/* Hover hint */}
+                        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                          <span className="px-2 py-1 bg-surf-black/85 backdrop-blur-sm text-white text-[9px] font-mono uppercase tracking-wider flex items-center gap-1 shadow-lg">
+                            <ZoomIn size={11} className="text-surf-accent" />
+                            <span>{language === 'en' ? 'Enlarge' : 'Ampliar'}</span>
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Handwritten Bottom Caption */}
+                      <div className="pt-2.5 sm:pt-3 px-1">
+                        <p 
+                          className="text-xs sm:text-[13px] font-serif italic text-neutral-800 leading-snug line-clamp-2"
+                          style={{ fontFamily: 'Georgia, serif' }}
+                        >
+                          "{language === 'en' ? cardTop.captionEn : cardTop.captionEs}"
+                        </p>
+
+                        <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-neutral-300/60 text-[8px] sm:text-[9px] font-mono text-neutral-500 uppercase tracking-wider">
+                          <span className="flex items-center gap-1">
+                            <MapPin size={9} className="text-surf-accent" />
+                            <span className="truncate max-w-[130px]">{language === 'en' ? cardTop.locationEn : cardTop.locationEs}</span>
+                          </span>
+                          <span className="font-bold text-neutral-700">{cardTop.date}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right Arrow Button (Clean editorial arrow without circular enclosure) */}
+                  <button
+                    type="button"
+                    onClick={() => setActivePolaroidIndex((prev) => (prev + 1) % total)}
+                    className="group absolute -right-4 sm:-right-8 md:-right-12 lg:-right-14 top-1/2 -translate-y-1/2 z-30 p-2 text-surf-white/50 hover:text-surf-accent transition-all duration-200 cursor-pointer focus:outline-none"
+                    title={language === 'en' ? 'Next photo' : 'Siguiente foto'}
+                    aria-label="Next Polaroid"
+                  >
+                    <ChevronRight size={34} strokeWidth={1.5} className="group-hover:translate-x-1 group-hover:scale-110 transition-all duration-200" />
+                  </button>
+                </div>
+              );
+            })()}
           </div>
         </motion.div>
+
+        {/* FULLSCREEN LIGHTBOX MODAL */}
+        <AnimatePresence>
+          {isLightboxOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsLightboxOpen(false)}
+              className="fixed inset-0 z-[120] bg-surf-black/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-8"
+            >
+              <div className="absolute top-5 right-5 flex items-center gap-3 z-[130]">
+                <button
+                  type="button"
+                  onClick={() => setIsLightboxOpen(false)}
+                  className="p-2.5 bg-surf-white/10 hover:bg-surf-accent text-surf-white hover:text-surf-black transition-colors cursor-pointer"
+                  title={language === 'en' ? 'Close' : 'Cerrar'}
+                  aria-label="Close"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Navigation inside Lightbox */}
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActivePolaroidIndex((prev) => (prev > 0 ? prev - 1 : POLAROID_GALLERY.length - 1));
+                }}
+                className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-[130] p-3 bg-surf-white/10 hover:bg-surf-accent text-surf-white hover:text-surf-black transition-colors"
+                aria-label="Previous"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActivePolaroidIndex((prev) => (prev + 1) % POLAROID_GALLERY.length);
+                }}
+                className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-[130] p-3 bg-surf-white/10 hover:bg-surf-accent text-surf-white hover:text-surf-black transition-colors"
+                aria-label="Next"
+              >
+                <ChevronRight size={24} />
+              </button>
+
+              {(() => {
+                const list = POLAROID_GALLERY;
+                const activeSnap = list[activePolaroidIndex % list.length] || list[0];
+
+                return (
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative max-w-md w-full bg-[#FAF8F5] text-neutral-900 p-4 sm:p-5 pb-9 sm:pb-12 shadow-[0_25px_70px_rgba(0,0,0,0.95)] border border-[#E5E0D8] rounded-[2px]"
+                  >
+                    <div className="relative aspect-square w-full bg-neutral-950 overflow-hidden shadow-inner border border-black/10">
+                      <img
+                        src={activeSnap.url}
+                        alt={language === 'en' ? activeSnap.captionEn : activeSnap.captionEs}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+
+                    <div className="pt-5 px-1 text-center">
+                      <p 
+                        className="text-base sm:text-lg font-serif italic text-neutral-900 leading-snug"
+                        style={{ fontFamily: 'Georgia, serif' }}
+                      >
+                        "{language === 'en' ? activeSnap.captionEn : activeSnap.captionEs}"
+                      </p>
+
+                      <div className="flex items-center justify-between mt-4 pt-3 border-t border-neutral-300/80 text-xs font-mono text-neutral-500 uppercase tracking-wider">
+                        <span className="flex items-center gap-1">
+                          <MapPin size={12} className="text-surf-accent" />
+                          <span>{language === 'en' ? activeSnap.locationEn : activeSnap.locationEs}</span>
+                        </span>
+                        <span className="font-bold text-neutral-800">{activeSnap.date}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* 6. TESTIMONIALS SECTION (Light Canvas) - EXACT H2 as required */}
@@ -555,7 +789,7 @@ export default function Home() {
             Ready for their first wave at sunset?
           </h2>
           <p className="text-sm sm:text-base font-light text-surf-white/80 mb-6 max-w-2xl mx-auto leading-relaxed">
-            Spaces are strictly limited to protect our 1:3 student-coach ratio in Playa Guiones, Nosara. Reserve your family session or message Coach Bryan directly on WhatsApp for tide times.
+            Spaces are strictly limited to protect our 1:3 student-coach ratio in Playa Guiones, Nosara. Reserve your family session or contact Coach Bryan directly for custom availability.
           </p>
 
           {/* Clean Editorial Links */}
@@ -567,16 +801,13 @@ export default function Home() {
               <span>{data.ctaBookBtn || 'Book Session'}</span>
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
             </Link>
-            <a 
-              href="https://wa.me/50688997873?text=Hola%20Bryan!%20I%20would%20like%20to%20inquire%20about%20surf%20lessons%20in%20Playa%20Guiones"
-              target="_blank"
-              rel="noreferrer"
+            <Link 
+              to="/contact"
               className="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-surf-white/80 hover:text-surf-accent border-b border-surf-white/30 hover:border-surf-accent pb-1 transition-colors inline-flex items-center gap-2 group"
             >
-              <MessageCircle size={14} className="text-surf-accent" />
-              <span>{data.ctaWhatsappBtn || 'WhatsApp Concierge'}</span>
+              <span>Contact Us</span>
               <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-            </a>
+            </Link>
           </div>
         </motion.div>
 

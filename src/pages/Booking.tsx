@@ -54,28 +54,28 @@ export default function Booking() {
   };
 
   return (
-    <div className="min-h-screen bg-surf-black text-surf-white pt-32 pb-24 px-6 sm:px-10">
+    <div className="min-h-screen bg-surf-white text-surf-black pt-32 pb-24 px-6 sm:px-10">
       <div className="max-w-6xl mx-auto w-full">
         {/* Header - Completely Open, No Badges in boxes */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <span className="text-[11px] font-mono uppercase tracking-[0.4em] text-surf-accent block mb-3">
+          <span className="text-[11px] font-mono uppercase tracking-[0.4em] text-surf-accent block mb-3 font-semibold">
             {data.badge || 'Easy Online Scheduling'}
           </span>
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="font-display text-5xl sm:text-7xl uppercase leading-[0.9] text-surf-white mb-5 whitespace-pre-line"
+            className="font-display text-5xl sm:text-7xl uppercase leading-[0.9] text-surf-black mb-5 whitespace-pre-line"
           >
             {data.title || 'Book Your\nSession'}
           </motion.h1>
-          <p className="text-base sm:text-lg font-light text-surf-white/75 leading-relaxed">
+          <p className="text-base sm:text-lg font-light text-surf-black/75 leading-relaxed">
             {data.subtitle || 'Select your preferred class, date, and group size. We time every lesson around the optimal tide for safety.'}
           </p>
         </div>
 
         {/* Live Calendly Option - Open Editorial Line (No card/box) */}
-        <div className="py-4 border-b border-surf-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 mb-14 text-sm font-light text-surf-white/80">
+        <div className="py-4 border-b border-surf-black/15 flex flex-col sm:flex-row items-center justify-between gap-4 mb-14 text-sm font-light text-surf-black/80">
           <div className="flex items-center gap-3">
             <CalendarIcon className="text-surf-accent shrink-0" size={18} />
             <span>{formData.calendlyAlt || 'Prefer to pick a live calendar slot directly in Calendly?'}</span>
@@ -83,9 +83,9 @@ export default function Booking() {
           <button 
             type="button"
             onClick={() => setShowCalendlyModal(true)}
-            className="text-xs font-mono uppercase tracking-wider text-surf-accent hover:text-surf-white flex items-center gap-2 group transition-colors cursor-pointer"
+            className="text-xs font-mono uppercase tracking-wider text-surf-accent hover:text-surf-black flex items-center gap-2 group transition-colors cursor-pointer font-semibold"
           >
-            <span className="underline underline-offset-4 decoration-surf-accent/60 group-hover:decoration-surf-white">
+            <span className="underline underline-offset-4 decoration-surf-accent/60 group-hover:decoration-surf-black">
               {formData.calendlyBtn || 'Open Calendly Schedule'}
             </span>
             <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -96,19 +96,19 @@ export default function Booking() {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="py-12 text-center max-w-2xl mx-auto border-t border-b border-surf-white/10"
+            className="py-12 text-center max-w-2xl mx-auto border-t border-b border-surf-black/15"
           >
-            <div className="w-14 h-14 rounded-full bg-surf-accent text-surf-black flex items-center justify-center mx-auto mb-6">
-              <Check size={28} strokeWidth={3} />
+            <div className="w-12 h-12 bg-surf-accent text-surf-black flex items-center justify-center mx-auto mb-6">
+              <Check size={24} strokeWidth={2.5} />
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl uppercase mb-4 text-surf-white">
+            <h2 className="font-display text-3xl sm:text-4xl uppercase mb-4 text-surf-black">
               {data.successTitle || 'Reservation Request Received!'}
             </h2>
-            <p className="text-sm sm:text-base font-light text-surf-white/80 leading-relaxed mb-8">
-              {data.successDesc || 'Bryan or our concierge will message you on WhatsApp and email within 2 hours with your exact tide-optimized meeting time at Playa Guiones.'}
+            <p className="text-sm sm:text-base font-light text-surf-black/80 leading-relaxed mb-8">
+              {data.successDesc || 'Bryan or our concierge team will reach out to you via email and phone within 2 hours with your exact tide-optimized meeting time at Playa Guiones.'}
             </p>
 
-            <div className="py-6 border-t border-b border-surf-white/10 text-left text-xs font-mono mb-8 space-y-2">
+            <div className="py-6 border-t border-b border-surf-black/15 text-left text-xs font-mono mb-8 space-y-2">
               <p><strong className="text-surf-accent">Program:</strong> {currentProgramObj?.name}</p>
               <p><strong className="text-surf-accent">Date:</strong> {preferredDate || 'Coordinating with tide'}</p>
               <p><strong className="text-surf-accent">Window:</strong> {preferredTime}</p>
@@ -117,18 +117,15 @@ export default function Booking() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <a 
-                href={generateWhatsAppUrl()}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 text-surf-accent hover:text-surf-white font-mono uppercase text-xs tracking-widest transition-colors"
+              <Link 
+                to="/contact"
+                className="inline-flex items-center justify-center gap-2 text-surf-accent hover:text-surf-black font-mono uppercase text-xs tracking-widest transition-colors font-semibold"
               >
-                <MessageCircle size={16} />
-                <span className="underline underline-offset-4">Confirm on WhatsApp Now →</span>
-              </a>
+                <span className="underline underline-offset-4">Have Questions? Contact Us →</span>
+              </Link>
               <button 
                 onClick={() => setSubmitted(false)}
-                className="text-surf-white/60 hover:text-surf-white text-xs font-mono uppercase tracking-wider underline underline-offset-4 transition-colors"
+                className="text-surf-black/60 hover:text-surf-black text-xs font-mono uppercase tracking-wider underline underline-offset-4 transition-colors"
               >
                 Make Another Booking
               </button>
@@ -141,10 +138,10 @@ export default function Booking() {
               
               {/* Step 1: Select Program - Open Editorial List (NO BOXES) */}
               <div>
-                <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-surf-accent mb-4 pb-2 border-b border-surf-white/10">
+                <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-surf-accent mb-4 pb-2 border-b border-surf-black/15 font-semibold">
                   {data.step1 || '1. Select Your Program'}
                 </h3>
-                <div className="divide-y divide-surf-white/10">
+                <div className="divide-y divide-surf-black/15">
                   {(data.programs || []).map((prog: any) => {
                     const isSelected = selectedProgram === prog.id;
                     return (
@@ -152,20 +149,20 @@ export default function Booking() {
                         key={prog.id}
                         onClick={() => setSelectedProgram(prog.id)}
                         className={`py-4 px-2 transition-all duration-200 cursor-pointer flex items-center justify-between gap-4 group ${
-                          isSelected ? 'text-surf-white' : 'text-surf-white/70 hover:text-surf-white'
+                          isSelected ? 'text-surf-black' : 'text-surf-black/70 hover:text-surf-black'
                         }`}
                       >
                         <div className="flex items-center gap-4">
-                          <span className={`w-2.5 h-2.5 rounded-full shrink-0 transition-colors ${
-                            isSelected ? 'bg-surf-accent ring-4 ring-surf-accent/20' : 'bg-surf-white/20 group-hover:bg-surf-white/40'
+                          <span className={`w-2 h-2 shrink-0 transition-colors ${
+                            isSelected ? 'bg-surf-accent ring-2 ring-surf-accent/20' : 'bg-surf-black/20 group-hover:bg-surf-black/40'
                           }`} />
                           <div>
                             <h4 className={`font-display text-xl sm:text-2xl uppercase tracking-tight transition-colors ${
-                              isSelected ? 'text-surf-accent' : 'text-surf-white group-hover:text-surf-accent'
+                              isSelected ? 'text-surf-accent' : 'text-surf-black group-hover:text-surf-accent'
                             }`}>
                               {prog.name}
                             </h4>
-                            <span className="text-[11px] font-mono text-surf-white/50 block">
+                            <span className="text-[11px] font-mono text-surf-black/50 block">
                               {prog.ratio}
                             </span>
                           </div>
@@ -173,7 +170,7 @@ export default function Booking() {
 
                         <div className="text-right shrink-0">
                           <span className={`font-display text-xl sm:text-2xl transition-colors ${
-                            isSelected ? 'text-surf-accent' : 'text-surf-white/85'
+                            isSelected ? 'text-surf-accent font-semibold' : 'text-surf-black/85'
                           }`}>
                             {prog.price}
                           </span>
@@ -186,12 +183,12 @@ export default function Booking() {
 
               {/* Step 2: Date & Tide Window - Underline Inputs (NO BOXES) */}
               <div>
-                <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-surf-accent mb-4 pb-2 border-b border-surf-white/10">
+                <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-surf-accent mb-4 pb-2 border-b border-surf-black/15 font-semibold">
                   {data.step2 || '2. Date & Time Preferences'}
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-8">
                   <div>
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                       {formData.dateLabel || 'Preferred Date'}
                     </label>
                     <input 
@@ -199,24 +196,24 @@ export default function Booking() {
                       required
                       value={preferredDate}
                       onChange={(e) => setPreferredDate(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent transition-colors rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent transition-colors rounded-none"
                     />
                   </div>
                   <div>
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                       {formData.timeLabel || 'Preferred Time Window'}
                     </label>
                     <select 
                       value={preferredTime}
                       onChange={(e) => setPreferredTime(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent transition-colors rounded-none cursor-pointer"
+                      className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent transition-colors rounded-none cursor-pointer"
                     >
                       {(formData.timeOptions || [
                         'Morning Low Tide (Calmest, Recommended)',
                         'Mid-Day Mellow Session',
                         'Sunset Golden Hour Session'
                       ]).map((opt: string) => (
-                        <option key={opt} value={opt} className="bg-surf-black text-surf-white">{opt}</option>
+                        <option key={opt} value={opt} className="bg-surf-white text-surf-black">{opt}</option>
                       ))}
                     </select>
                   </div>
@@ -225,29 +222,29 @@ export default function Booking() {
 
               {/* Step 3: Surfer Profile - Underline Inputs (NO BOXES) */}
               <div>
-                <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-surf-accent mb-4 pb-2 border-b border-surf-white/10">
+                <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-surf-accent mb-4 pb-2 border-b border-surf-black/15 font-semibold">
                   {data.step3 || '3. Surfer Details & Experience'}
                 </h3>
                 <div className="grid sm:grid-cols-2 gap-8 mb-8">
                   <div>
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                       {formData.surfersLabel || 'Number of Surfers'}
                     </label>
                     <select 
                       value={numSurfers}
                       onChange={(e) => setNumSurfers(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent rounded-none cursor-pointer"
+                      className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent rounded-none cursor-pointer"
                     >
-                      <option value="1" className="bg-surf-black">1 Surfer</option>
-                      <option value="2" className="bg-surf-black">2 Surfers</option>
-                      <option value="3" className="bg-surf-black">3 Surfers (Max for 1 Coach)</option>
-                      <option value="4" className="bg-surf-black">4 Surfers (Family - 2 Coaches)</option>
-                      <option value="5+" className="bg-surf-black">5+ Surfers (Custom Family Group)</option>
+                      <option value="1" className="bg-surf-white text-surf-black">1 Surfer</option>
+                      <option value="2" className="bg-surf-white text-surf-black">2 Surfers</option>
+                      <option value="3" className="bg-surf-white text-surf-black">3 Surfers (Max for 1 Coach)</option>
+                      <option value="4" className="bg-surf-white text-surf-black">4 Surfers (Family - 2 Coaches)</option>
+                      <option value="5+" className="bg-surf-white text-surf-black">5+ Surfers (Custom Family Group)</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                       {formData.kidsAgesLabel || 'Kids Ages (e.g. 7, 10)'}
                     </label>
                     <input 
@@ -255,38 +252,38 @@ export default function Booking() {
                       placeholder="e.g. 7 and 10 years old"
                       value={kidsAges}
                       onChange={(e) => setKidsAges(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent placeholder:text-surf-white/30 rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent placeholder:text-surf-black/30 rounded-none"
                     />
                   </div>
                 </div>
 
                 <div className="grid sm:grid-cols-2 gap-8">
                   <div>
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                       {formData.experienceLabel || 'Experience Level'}
                     </label>
                     <select 
                       value={experience}
                       onChange={(e) => setExperience(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent rounded-none cursor-pointer"
+                      className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent rounded-none cursor-pointer"
                     >
                       {(formData.expOptions || ['Absolute First Time', 'Has Tried Once', 'Comfortable in Whitewater']).map((opt: string) => (
-                        <option key={opt} value={opt} className="bg-surf-black">{opt}</option>
+                        <option key={opt} value={opt} className="bg-surf-white text-surf-black">{opt}</option>
                       ))}
                     </select>
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                       {formData.swimmingLabel || 'Swimming Comfort'}
                     </label>
                     <select 
                       value={swimming}
                       onChange={(e) => setSwimming(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent rounded-none cursor-pointer"
+                      className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent rounded-none cursor-pointer"
                     >
                       {(formData.swimOptions || ['Basic Water Comfort', 'Confident Swimmer']).map((opt: string) => (
-                        <option key={opt} value={opt} className="bg-surf-black">{opt}</option>
+                        <option key={opt} value={opt} className="bg-surf-white text-surf-black">{opt}</option>
                       ))}
                     </select>
                   </div>
@@ -295,12 +292,12 @@ export default function Booking() {
 
               {/* Step 4: Contact Details - Underline Inputs (NO BOXES) */}
               <div>
-                <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-surf-accent mb-4 pb-2 border-b border-surf-white/10">
+                <h3 className="text-xs font-mono uppercase tracking-[0.3em] text-surf-accent mb-4 pb-2 border-b border-surf-black/15 font-semibold">
                   {data.step4 || '4. Contact Details'}
                 </h3>
                 <div className="space-y-8">
                   <div>
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                       {formData.parentNameLabel || 'Lead Parent Name'}
                     </label>
                     <input 
@@ -309,13 +306,13 @@ export default function Booking() {
                       placeholder="Your full name"
                       value={parentName}
                       onChange={(e) => setParentName(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent placeholder:text-surf-white/30 rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent placeholder:text-surf-black/30 rounded-none"
                     />
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-8">
                     <div>
-                      <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                      <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                         {formData.emailLabel || 'Email'}
                       </label>
                       <input 
@@ -324,11 +321,11 @@ export default function Booking() {
                         placeholder="you@example.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent placeholder:text-surf-white/30 rounded-none"
+                        className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent placeholder:text-surf-black/30 rounded-none"
                       />
                     </div>
                     <div>
-                      <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                      <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                         {formData.phoneLabel || 'WhatsApp / Phone'}
                       </label>
                       <input 
@@ -337,13 +334,13 @@ export default function Booking() {
                         placeholder="+1 (555) 000-0000"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent placeholder:text-surf-white/30 rounded-none"
+                        className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent placeholder:text-surf-black/30 rounded-none"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-white/60 block mb-1.5">
+                    <label className="text-[11px] font-mono uppercase tracking-wider text-surf-black/60 block mb-1.5">
                       {formData.notesLabel || 'Special Requests / Notes'}
                     </label>
                     <textarea 
@@ -351,7 +348,7 @@ export default function Booking() {
                       placeholder={formData.notesPlaceholder || 'Tell us about your kids, if they are nervous with water...'}
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      className="w-full bg-transparent border-0 border-b border-surf-white/25 py-2.5 px-0 text-surf-white text-base outline-none focus:border-surf-accent placeholder:text-surf-white/30 resize-none rounded-none"
+                      className="w-full bg-transparent border-0 border-b border-surf-black/25 py-2.5 px-0 text-surf-black text-base outline-none focus:border-surf-accent placeholder:text-surf-black/30 resize-none rounded-none"
                     />
                   </div>
                 </div>
@@ -360,7 +357,7 @@ export default function Booking() {
               {/* Action Button */}
               <button 
                 type="submit"
-                className="w-full py-4 mt-6 bg-surf-accent hover:bg-surf-white text-surf-black font-display text-xl uppercase tracking-wider transition-colors flex items-center justify-center gap-3 cursor-pointer"
+                className="w-full py-4 mt-6 bg-surf-black hover:bg-surf-accent text-surf-white hover:text-surf-black font-display text-xl uppercase tracking-wider transition-colors flex items-center justify-center gap-3 cursor-pointer"
               >
                 <span>{formData.submitBtn || 'Confirm Reservation Request'}</span>
                 <ArrowRight size={18} />
@@ -369,15 +366,15 @@ export default function Booking() {
 
             {/* Right Column: Session Summary - Open Editorial Column (NO BOXES) */}
             <div className="lg:col-span-5">
-              <div className="sticky top-32 lg:pl-10 lg:border-l lg:border-surf-white/10 pt-2">
-                <span className="text-[10px] uppercase font-mono tracking-[0.35em] text-surf-accent block mb-2">
+              <div className="sticky top-32 lg:pl-10 lg:border-l lg:border-surf-black/15 pt-2">
+                <span className="text-[10px] uppercase font-mono tracking-[0.35em] text-surf-accent block mb-2 font-semibold">
                   {language === 'en' ? 'Session Summary' : 'Resumen de Sesión'}
                 </span>
-                <h4 className="font-display text-3xl sm:text-4xl uppercase tracking-tight text-surf-white mb-6">
+                <h4 className="font-display text-3xl sm:text-4xl uppercase tracking-tight text-surf-black mb-6">
                   {currentProgramObj?.name || 'Selected Program'}
                 </h4>
 
-                <div className="space-y-4 text-xs font-mono pb-6 border-b border-surf-white/10 text-surf-white/80">
+                <div className="space-y-4 text-xs font-mono pb-6 border-b border-surf-black/15 text-surf-black/80">
                   <div className="flex justify-between">
                     <span className="opacity-50">{language === 'en' ? 'Rate:' : 'Tarifa:'}</span>
                     <span className="text-surf-accent font-bold text-sm">{currentProgramObj?.price}</span>
@@ -392,7 +389,7 @@ export default function Booking() {
                   </div>
                   <div className="flex justify-between">
                     <span className="opacity-50">{language === 'en' ? 'Video Footage:' : 'Tomas de Video:'}</span>
-                    <span className="text-emerald-400 font-semibold">{language === 'en' ? 'Included free' : 'Incluido sin costo'}</span>
+                    <span className="text-emerald-700 font-semibold">{language === 'en' ? 'Included free' : 'Incluido sin costo'}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="opacity-50">{language === 'en' ? 'Location:' : 'Ubicación:'}</span>
@@ -400,7 +397,7 @@ export default function Booking() {
                   </div>
                 </div>
 
-                <div className="pt-6 space-y-3 text-xs font-mono text-surf-white/75">
+                <div className="pt-6 space-y-3 text-xs font-mono text-surf-black/75">
                   <div className="flex items-center gap-3">
                     <span className="text-surf-accent font-bold">✓</span>
                     <span>Pediatric CPR & Lifeguard Certified</span>
@@ -415,8 +412,8 @@ export default function Booking() {
                   </div>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-surf-white/10">
-                  <p className="text-[11px] font-mono text-surf-white/50 leading-relaxed">
+                <div className="mt-8 pt-6 border-t border-surf-black/15">
+                  <p className="text-[11px] font-mono text-surf-black/50 leading-relaxed">
                     {formData.guarantee || 'No cancellation fee for weather/tide adjustments. We always coordinate the safest window.'}
                   </p>
                 </div>
@@ -432,38 +429,38 @@ export default function Booking() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-[100] bg-surf-black/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-8"
+              className="fixed inset-0 z-[100] bg-surf-black/60 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
               onClick={() => setShowCalendlyModal(false)}
             >
               <div 
-                className="bg-surf-black border border-surf-white/20 w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 sm:p-10 relative flex flex-col"
+                className="bg-surf-white border border-surf-black/20 text-surf-black w-full max-w-3xl max-h-[90vh] overflow-y-auto p-6 sm:p-10 relative flex flex-col shadow-2xl"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="flex justify-between items-center mb-6 pb-4 border-b border-surf-white/10">
+                <div className="flex justify-between items-center mb-6 pb-4 border-b border-surf-black/15">
                   <div>
-                    <h3 className="font-display text-2xl uppercase tracking-tight text-surf-white">
+                    <h3 className="font-display text-2xl uppercase tracking-tight text-surf-black">
                       Coach Bryan’s Live Calendar
                     </h3>
-                    <p className="text-xs font-mono text-surf-accent">
+                    <p className="text-xs font-mono text-surf-accent font-semibold">
                       Playa Guiones • Real-Time Tide Schedules
                     </p>
                   </div>
                   <button 
                     onClick={() => setShowCalendlyModal(false)}
-                    className="text-surf-white/60 hover:text-surf-white p-2 cursor-pointer"
+                    className="text-surf-black/60 hover:text-surf-black p-2 cursor-pointer"
                   >
                     <X size={24} />
                   </button>
                 </div>
 
                 <div className="py-4 space-y-6">
-                  <p className="text-xs text-surf-white/70 font-light leading-relaxed">
+                  <p className="text-xs text-surf-black/75 font-light leading-relaxed">
                     {language === 'en'
                       ? 'Select a daily low-tide window below to auto-fill into your reservation, or coordinate directly with Bryan via WhatsApp:'
-                      : 'Elige un horario de marea baja a continuación para autocompletar tu reserva, o coordina directamente con Bryan por WhatsApp:'}
+                      : 'Elige un horario de marea baja a continuación para autocompletar tu reserva, o consúltanos directamente:'}
                   </p>
 
-                  <div className="divide-y divide-surf-white/10">
+                  <div className="divide-y divide-surf-black/15">
                     {[
                       { time: 'Tomorrow 7:30 AM', note: 'Low Tide Glass (Optimal for Groms & First Timers)' },
                       { time: 'Tomorrow 9:30 AM', note: 'Pushing Tide (Soft Whitewater Rollers)' },
@@ -479,10 +476,10 @@ export default function Booking() {
                         className="py-3 px-2 flex items-center justify-between group cursor-pointer hover:text-surf-accent transition-colors"
                       >
                         <div>
-                          <span className="font-display text-lg uppercase text-surf-white group-hover:text-surf-accent transition-colors block">
+                          <span className="font-display text-lg uppercase text-surf-black group-hover:text-surf-accent transition-colors block">
                             {slot.time}
                           </span>
-                          <span className="text-[11px] font-mono text-surf-white/50">
+                          <span className="text-[11px] font-mono text-surf-black/50">
                             {slot.note}
                           </span>
                         </div>
@@ -491,16 +488,14 @@ export default function Booking() {
                     ))}
                   </div>
 
-                  <div className="pt-6 border-t border-surf-white/10 flex justify-end">
-                    <a 
-                      href="https://wa.me/50688997873?text=Hola%20Bryan!%20I%20want%20to%20reserve%20a%20specific%20time%20slot"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-surf-accent hover:text-surf-white transition-colors"
+                  <div className="pt-6 border-t border-surf-black/15 flex justify-end">
+                    <Link 
+                      to="/contact"
+                      onClick={() => setShowCalendlyModal(false)}
+                      className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-surf-accent hover:text-surf-black transition-colors font-semibold"
                     >
-                      <MessageCircle size={15} />
-                      <span className="underline underline-offset-4">Sync with Bryan Directly on WhatsApp →</span>
-                    </a>
+                      <span className="underline underline-offset-4">Need a Custom Time? Contact Us →</span>
+                    </Link>
                   </div>
                 </div>
               </div>

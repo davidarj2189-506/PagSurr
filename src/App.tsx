@@ -18,12 +18,14 @@ import Contact from './pages/Contact';
 import Faq from './pages/Faq';
 import Gallery from './pages/Gallery';
 import Blog from './pages/Blog';
+import SurfCursorEffects from './components/SurfCursorEffects';
 
 export default function App() {
   return (
     <HelmetProvider>
       <LanguageProvider>
         <Router>
+          <SurfCursorEffects />
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />

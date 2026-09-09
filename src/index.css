@@ -14,10 +14,20 @@
   html {
     @apply bg-surf-black text-surf-white font-sans antialiased scroll-smooth;
     scroll-snap-type: y mandatory;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / Edge */
+  }
+  html::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
   }
   body {
     @apply bg-surf-black text-surf-white font-sans antialiased min-h-screen w-full overflow-x-hidden;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE / Edge */
+  }
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
   }
   #root {
     @apply min-h-screen w-full flex flex-col;
@@ -51,4 +61,39 @@
 .hero-text {
   font-size: clamp(3.5rem, min(14vw, 18vh), 12rem);
   @apply font-display leading-[0.82] uppercase tracking-tighter text-center;
+}
+
+/* Custom Surfboard Cursor */
+@media (hover: hover) and (pointer: fine) {
+  html, body, *, *::before, *::after {
+    cursor: url('/surfboard-cursor.svg') 2 2, auto;
+  }
+
+  a, 
+  button, 
+  [role="button"], 
+  input[type="submit"], 
+  input[type="button"], 
+  input[type="reset"], 
+  select, 
+  summary,
+  .cursor-pointer {
+    cursor: url('/surfboard-pointer.svg') 2 2, pointer !important;
+  }
+
+  a *, 
+  button *, 
+  [role="button"] *, 
+  .cursor-pointer * {
+    cursor: inherit !important;
+  }
+
+  input[type="text"], 
+  input[type="email"], 
+  input[type="tel"], 
+  input[type="number"], 
+  input[type="password"], 
+  textarea {
+    cursor: text !important;
+  }
 }

@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { useLanguage } from '../lib/i18n';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Us() {
   const { t } = useLanguage();
@@ -117,28 +118,27 @@ export default function Us() {
         </div>
       </div>
 
-      {/* Footer / CTA */}
+      {/* Footer / CTA - Open Editorial Layout */}
       <motion.div 
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="bg-surf-black text-surf-white max-w-4xl mx-auto p-12 md:p-20 text-center mb-10"
+        className="border-t border-surf-black/15 pt-16 pb-8 max-w-4xl mx-auto text-center"
       >
-        <h2 className="font-display text-3xl md:text-5xl uppercase mb-8 leading-none">
+        <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl uppercase mb-6 leading-none text-surf-black">
           {data.ctaTitle}
         </h2>
-        <p className="text-lg font-light opacity-80 mb-10 max-w-xl mx-auto">
+        <p className="text-base sm:text-lg font-light text-surf-black/80 mb-8 max-w-xl mx-auto leading-relaxed">
           {data.ctaText}
         </p>
-        <a href="/contact" className="inline-flex items-center gap-6 group mx-auto">
-          <span className="text-xs font-bold uppercase border-b-2 border-surf-white pb-1 group-hover:text-surf-accent group-hover:border-surf-accent transition-colors">
-            {data.ctaTitle}
-          </span>
-          <div className="w-10 h-10 rounded-full border border-surf-white flex items-center justify-center group-hover:border-surf-accent group-hover:text-surf-accent transition-all duration-300">
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </div>
-        </a>
+        <Link 
+          to="/contact" 
+          className="inline-flex items-center gap-3 text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-surf-black hover:text-surf-accent border-b-2 border-surf-black hover:border-surf-accent pb-1 transition-colors group"
+        >
+          <span>{data.ctaTitle}</span>
+          <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform" />
+        </Link>
       </motion.div>
 
     </section>
