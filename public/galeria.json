@@ -1,0 +1,58 @@
+[
+  {
+    "id": "4-sunset-glow.jpg",
+    "name": "4-sunset-glow.jpg",
+    "url": "/galeria/4-sunset-glow.jpg",
+    "title": "Sunset glow",
+    "captionEn": "Sunset glow • Nosara, Playa Guiones",
+    "captionEs": "Sunset glow • Nosara, Playa Guiones",
+    "date": "Sep 12, 2026",
+    "size": 156818,
+    "mtime": 1789238084922.103,
+    "category": "moments",
+    "rotation": "rotate-1.5",
+    "tapeStyle": "top-[-8px] left-1/2 -translate-x-1/2 rotate-1"
+  },
+  {
+    "id": "3-coach-bryan-sofia.jpg",
+    "name": "3-coach-bryan-sofia.jpg",
+    "url": "/galeria/3-coach-bryan-sofia.jpg",
+    "title": "Coach bryan sofia",
+    "captionEn": "Coach bryan sofia • Nosara, Playa Guiones",
+    "captionEs": "Coach bryan sofia • Nosara, Playa Guiones",
+    "date": "Sep 12, 2026",
+    "size": 265170,
+    "mtime": 1789238069537.588,
+    "category": "moments",
+    "rotation": "-rotate-1",
+    "tapeStyle": "top-[-8px] left-1/3 -rotate-2"
+  },
+  {
+    "id": "2-sunset-party-wave.jpg",
+    "name": "2-sunset-party-wave.jpg",
+    "url": "/galeria/2-sunset-party-wave.jpg",
+    "title": "Sunset party wave",
+    "captionEn": "Sunset party wave • Nosara, Playa Guiones",
+    "captionEs": "Sunset party wave • Nosara, Playa Guiones",
+    "date": "Sep 12, 2026",
+    "size": 176255,
+    "mtime": 1789238069079.9014,
+    "category": "moments",
+    "rotation": "rotate-2",
+    "tapeStyle": "top-[-8px] right-1/4 rotate-2"
+  },
+  {
+    "id": "1-mateo-standing-wave.jpg",
+    "name": "1-mateo-standing-wave.jpg",
+    "url": "/galeria/1-mateo-standing-wave.jpg",
+    "title": "Mateo standing wave",
+    "captionEn": "Mateo standing wave • Nosara, Playa Guiones",
+    "captionEs": "Mateo standing wave • Nosara, Playa Guiones",
+    "date": "Sep 12, 2026",
+    "size": 170644,
+    "mtime": 1789238068528.4849,
+    "category": "moments",
+    "rotation": "-rotate-2",
+    "tapeStyle": "top-[-8px] left-1/2 -translate-x-1/2 -rotate-1"
+  }
+]

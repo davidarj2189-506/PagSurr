@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../lib/i18n';
-import { X, ChevronLeft, ChevronRight, Camera, Sparkles, MapPin, Calendar, Heart } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Camera, MapPin, Image as ImageIcon } from 'lucide-react';
 import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
-import { POLAROID_GALLERY, PolaroidPhoto } from '../data/polaroids';
+import { useGalleryImages } from '../lib/useMedia';
 
 export default function Gallery() {
   const { language } = useLanguage();
+  const { images } = useGalleryImages();
   const [filter, setFilter] = useState<'all' | 'kids' | 'family' | 'moments'>('all');
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const filteredPhotos = filter === 'all' 
-    ? POLAROID_GALLERY 
-    : POLAROID_GALLERY.filter(p => p.category === filter);
+    ? images 
+    : images.filter(p => p.category === filter);
 
   // Keyboard navigation for lightbox
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function Gallery() {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Editorial Retro Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 mb-3">
             <Camera size={14} className="text-surf-accent" />
             <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-surf-accent font-semibold">
@@ -73,8 +74,8 @@ export default function Gallery() {
               : 'Cada primera ola, choque de manos y sonrisa en el agua capturados con la cálida nostalgia de una cámara Polaroid.'}
           </p>
 
-          {/* Clean Editorial Filter Links (No boxes or card borders) */}
-          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-8 border-b border-surf-black/15 pb-4">
+          {/* Clean Editorial Filter Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-10 mt-10 border-b border-surf-black/15 pb-4">
             {[
               { id: 'all', labelEn: 'All Instant Snaps', labelEs: 'Todas las Fotos' },
               { id: 'kids', labelEn: 'Kids Groms (6-12)', labelEs: 'Niños Groms' },
@@ -97,66 +98,76 @@ export default function Gallery() {
         </div>
 
         {/* RETRO POLAROID GRID - Organic Scattered Film Table Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 max-w-6xl mx-auto pt-4">
-          {filteredPhotos.map((photo, index) => (
-            <motion.div
-              key={photo.id}
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
-              className="flex justify-center"
-            >
-              {/* THE AUTHENTIC POLAROID CARD */}
-              <div
-                onClick={() => setSelectedIndex(index)}
-                className={`group relative w-full max-w-[340px] bg-[#FAF8F5] text-[#1E1E1E] p-3 sm:p-3.5 pb-8 sm:pb-9 shadow-[0_10px_25px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.22)] ${photo.rotation} hover:rotate-0 hover:scale-[1.04] transition-all duration-300 ease-out cursor-pointer select-none border border-[#E5E0D8] rounded-[2px]`}
+        {filteredPhotos.length === 0 ? (
+          <div className="text-center py-20 max-w-md mx-auto">
+            <ImageIcon size={36} className="mx-auto text-surf-black/30 mb-3" />
+            <h3 className="font-display text-lg uppercase tracking-wider text-surf-black">
+              {language === 'en' ? 'No photos in this category yet' : 'No hay fotos en esta categoría'}
+            </h3>
+            <p className="text-xs font-mono text-surf-black/60 mt-1">
+              {language === 'en' ? 'Check back soon for new session memories' : 'Próximamente más fotografías de sesiones'}
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 lg:gap-12 max-w-6xl mx-auto pt-4">
+            {filteredPhotos.map((photo, index) => (
+              <motion.div
+                key={photo.id || index}
+                initial={{ opacity: 0, y: 25 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.06 }}
+                className="flex justify-center"
               >
-                {/* Vintage Washi / Masking Tape Top Strip */}
-                {photo.tapeStyle && (
+                {/* THE AUTHENTIC POLAROID CARD */}
+                <div
+                  onClick={() => setSelectedIndex(index)}
+                  className={`group relative w-full max-w-[340px] bg-[#FAF8F5] text-[#1E1E1E] p-3 sm:p-3.5 pb-8 sm:pb-9 shadow-[0_10px_25px_rgba(0,0,0,0.12)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.22)] ${photo.rotation || '-rotate-1'} hover:rotate-0 hover:scale-[1.04] transition-all duration-300 ease-out cursor-pointer select-none border border-[#E5E0D8] rounded-[2px]`}
+                >
+                  {/* Vintage Washi / Masking Tape Top Strip */}
                   <div 
-                    className={`absolute z-20 w-16 h-5 bg-[#e8deca]/85 border border-[#d3c5ab] backdrop-blur-[1px] shadow-sm pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity ${photo.tapeStyle}`}
+                    className={`absolute z-20 w-16 h-5 bg-[#e8deca]/85 border border-[#d3c5ab] backdrop-blur-[1px] shadow-sm pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity ${photo.tapeStyle || 'top-[-8px] left-1/2 -translate-x-1/2 -rotate-1'}`}
                   />
-                )}
 
-                {/* Photo Container with Retro Film Grading & Vignette */}
-                <div className="relative aspect-square w-full bg-[#181818] overflow-hidden shadow-inner border border-black/10">
-                  <img
-                    src={photo.url}
-                    alt={language === 'en' ? photo.captionEn : photo.captionEs}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover sepia-[0.18] contrast-[1.08] brightness-[0.98] group-hover:sepia-0 group-hover:scale-105 transition-all duration-700 ease-out"
-                  />
-                  {/* Subtle Film Grain / Light Leak Glow on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-transparent to-orange-400/15 opacity-60 group-hover:opacity-30 transition-opacity pointer-events-none" />
-                  
-                  {/* Viewfinder corner brackets on hover */}
-                  <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm text-white text-[9px] font-mono tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity rounded-[2px]">
-                    Polaroid 600
+                  {/* Photo Container with Retro Film Grading & Vignette */}
+                  <div className="relative aspect-square w-full bg-[#181818] overflow-hidden shadow-inner border border-black/10">
+                    <img
+                      src={photo.url}
+                      alt={language === 'en' ? photo.captionEn : photo.captionEs}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover sepia-[0.16] contrast-[1.06] brightness-[0.98] group-hover:sepia-0 group-hover:scale-105 transition-all duration-700 ease-out"
+                    />
+                    {/* Subtle Film Grain / Light Leak Glow on Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-amber-500/10 via-transparent to-orange-400/15 opacity-60 group-hover:opacity-30 transition-opacity pointer-events-none" />
+                    
+                    {/* Viewfinder corner brackets on hover */}
+                    <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-sm text-white text-[9px] font-mono tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity rounded-[2px]">
+                      Polaroid 600
+                    </div>
+                  </div>
+
+                  {/* Polaroid Wide Bottom Chin (Handwritten Marker Style Caption) */}
+                  <div className="pt-3.5 px-1 flex flex-col justify-between">
+                    <p 
+                      className="text-sm sm:text-base font-serif italic text-neutral-800 leading-snug tracking-tight line-clamp-2"
+                      style={{ fontFamily: 'Georgia, serif' }}
+                    >
+                      "{language === 'en' ? photo.captionEn : photo.captionEs}"
+                    </p>
+
+                    <div className="flex items-center justify-between mt-3 pt-2 border-t border-neutral-300/60 text-[10px] font-mono text-neutral-500 uppercase tracking-wider">
+                      <span className="flex items-center gap-1">
+                        <MapPin size={10} className="text-surf-accent" />
+                        <span className="truncate max-w-[140px]">Playa Guiones, Nosara</span>
+                      </span>
+                      <span className="font-bold text-neutral-700">{photo.date || 'Nosara'}</span>
+                    </div>
                   </div>
                 </div>
-
-                {/* Polaroid Wide Bottom Chin (Handwritten Marker Style Caption) */}
-                <div className="pt-3.5 px-1 flex flex-col justify-between">
-                  <p 
-                    className="text-sm sm:text-base font-serif italic text-neutral-800 leading-snug tracking-tight line-clamp-2"
-                    style={{ fontFamily: 'Georgia, serif' }}
-                  >
-                    "{language === 'en' ? photo.captionEn : photo.captionEs}"
-                  </p>
-
-                  <div className="flex items-center justify-between mt-3 pt-2 border-t border-neutral-300/60 text-[10px] font-mono text-neutral-500 uppercase tracking-wider">
-                    <span className="flex items-center gap-1">
-                      <MapPin size={10} className="text-surf-accent" />
-                      <span className="truncate max-w-[140px]">{language === 'en' ? photo.locationEn : photo.locationEs}</span>
-                    </span>
-                    <span className="font-bold text-neutral-700">{photo.date}</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
 
         {/* Bottom CTA Note */}
         <div className="mt-20 text-center border-t border-surf-black/15 pt-10 max-w-xl mx-auto">
@@ -177,7 +188,7 @@ export default function Gallery() {
 
       {/* FULLSCREEN POLAROID LIGHTBOX MODAL */}
       <AnimatePresence>
-        {selectedIndex !== null && (
+        {selectedIndex !== null && filteredPhotos[selectedIndex] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -251,9 +262,9 @@ export default function Gallery() {
                 <div className="flex items-center justify-between mt-4 pt-3 border-t border-neutral-300/80 text-xs font-mono text-neutral-500 uppercase tracking-wider">
                   <span className="flex items-center gap-1.5">
                     <MapPin size={13} className="text-surf-accent" />
-                    <span>{language === 'en' ? filteredPhotos[selectedIndex].locationEn : filteredPhotos[selectedIndex].locationEs}</span>
+                    <span>Playa Guiones, Nosara</span>
                   </span>
-                  <span className="font-bold text-neutral-800">{filteredPhotos[selectedIndex].date}</span>
+                  <span className="font-bold text-neutral-800">{filteredPhotos[selectedIndex].date || 'Nosara'}</span>
                 </div>
 
                 <div className="mt-2 text-center text-[10px] font-mono text-neutral-400 tracking-widest uppercase">

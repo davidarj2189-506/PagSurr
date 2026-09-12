@@ -6,10 +6,13 @@ import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { getHomePageSchema } from '../utils/schemaGenerator';
 import { POLAROID_GALLERY, PolaroidPhoto } from '../data/polaroids';
+import { useHeaderImage, useGalleryImages } from '../lib/useMedia';
 
 export default function Home() {
   const { t, language } = useLanguage();
   const data = t('home') || {};
+  const { headerImage } = useHeaderImage();
+  const { images: galleryImages } = useGalleryImages();
   const [activePolaroidIndex, setActivePolaroidIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(0);
@@ -149,15 +152,18 @@ export default function Home() {
         id="hero" 
         className="section-full relative min-h-[92vh] sm:min-h-screen w-full flex flex-col justify-between items-start p-6 sm:p-12 lg:px-16 overflow-hidden"
       >
-        {/* Ambient Wave Background Image - Optimized to reveal center surfer */}
+        {/* Ambient Wave Background Image - Automatically uses image from public/header */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <motion.div 
-            style={{ y: useTransform(scrollYProgress, [0, 0.25], [0, 140]) }}
-            className="w-full h-full bg-[url('https://images.unsplash.com/photo-1502680390469-be75c86b636f?auto=format&fit=crop&q=80')] bg-cover bg-center opacity-60 brightness-95 scale-105"
+            style={{ 
+              y: useTransform(scrollYProgress, [0, 0.25], [0, 140]),
+              backgroundImage: `url('${headerImage}')`
+            }}
+            className="w-full h-full bg-cover bg-center opacity-95 brightness-105 contrast-[1.02] scale-105"
           />
-          {/* Magazine Editorial Shadow: Darker on the left for crisp text readability, clear in the center & right to highlight the surfer */}
-          <div className="absolute inset-0 bg-gradient-to-r from-surf-black/95 via-surf-black/60 to-transparent w-full md:w-3/4" />
-          <div className="absolute inset-0 bg-gradient-to-t from-surf-black via-transparent to-surf-black/40" />
+          {/* Subtle soft gradient scrim on left only for high-contrast text readability without darkening the photo */}
+          <div className="absolute inset-0 bg-gradient-to-r from-surf-black/80 via-surf-black/35 to-transparent w-full sm:w-2/3 lg:w-1/2" />
+          <div className="absolute inset-0 bg-gradient-to-t from-surf-black/75 via-transparent to-surf-black/20" />
         </div>
 
         {/* Top spacer for header */}
@@ -181,12 +187,12 @@ export default function Home() {
             </div>
 
             {/* EXACT H1 as required */}
-            <h1 id="main-heading" className="font-display text-5xl sm:text-6xl lg:text-7xl uppercase leading-[0.92] text-surf-white select-none tracking-tight">
+            <h1 id="main-heading" className="font-display text-5xl sm:text-6xl lg:text-7xl uppercase leading-[0.92] text-surf-white select-none tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
               Where first waves become forever memories.
             </h1>
 
             {/* EXACT Hero Summary Paragraph as required */}
-            <p id="hero-summary" className="text-sm sm:text-base md:text-lg font-light tracking-wide max-w-lg mt-4 sm:mt-5 text-surf-white/90 leading-relaxed">
+            <p id="hero-summary" className="text-sm sm:text-base md:text-lg font-light tracking-wide max-w-lg mt-4 sm:mt-5 text-surf-white/95 leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
               Family surf coaching at sunset in Playa Guiones, Nosara. Safe, personalized lessons for kids in Costa Rica's Blue Zone.
             </p>
 
@@ -478,7 +484,7 @@ export default function Home() {
           {/* Right Column: Natural Editorial Polaroid Stack with Flanking External Arrows */}
           <div className="lg:col-span-7 flex flex-col items-center justify-center">
             {(() => {
-              const list = POLAROID_GALLERY;
+              const list = galleryImages && galleryImages.length > 0 ? galleryImages : POLAROID_GALLERY;
               const total = list.length;
               const cardTop = list[activePolaroidIndex % total];
               const cardLeft = list[(activePolaroidIndex + 1) % total];
@@ -635,39 +641,41 @@ export default function Home() {
                 </button>
               </div>
 
-              {/* Navigation inside Lightbox */}
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActivePolaroidIndex((prev) => (prev > 0 ? prev - 1 : POLAROID_GALLERY.length - 1));
-                }}
-                className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-[130] p-3 bg-surf-white/10 hover:bg-surf-accent text-surf-white hover:text-surf-black transition-colors"
-                aria-label="Previous"
-              >
-                <ChevronLeft size={24} />
-              </button>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setActivePolaroidIndex((prev) => (prev + 1) % POLAROID_GALLERY.length);
-                }}
-                className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-[130] p-3 bg-surf-white/10 hover:bg-surf-accent text-surf-white hover:text-surf-black transition-colors"
-                aria-label="Next"
-              >
-                <ChevronRight size={24} />
-              </button>
-
               {(() => {
-                const list = POLAROID_GALLERY;
-                const activeSnap = list[activePolaroidIndex % list.length] || list[0];
+                const list = galleryImages && galleryImages.length > 0 ? galleryImages : POLAROID_GALLERY;
+                const total = list.length;
+                const activeSnap = list[activePolaroidIndex % total] || list[0];
 
                 return (
-                  <div
-                    onClick={(e) => e.stopPropagation()}
-                    className="relative max-w-md w-full bg-[#FAF8F5] text-neutral-900 p-4 sm:p-5 pb-9 sm:pb-12 shadow-[0_25px_70px_rgba(0,0,0,0.95)] border border-[#E5E0D8] rounded-[2px]"
-                  >
+                  <>
+                    {/* Navigation inside Lightbox */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActivePolaroidIndex((prev) => (prev > 0 ? prev - 1 : total - 1));
+                      }}
+                      className="absolute left-3 sm:left-8 top-1/2 -translate-y-1/2 z-[130] p-3 bg-surf-white/10 hover:bg-surf-accent text-surf-white hover:text-surf-black transition-colors"
+                      aria-label="Previous"
+                    >
+                      <ChevronLeft size={24} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setActivePolaroidIndex((prev) => (prev + 1) % total);
+                      }}
+                      className="absolute right-3 sm:right-8 top-1/2 -translate-y-1/2 z-[130] p-3 bg-surf-white/10 hover:bg-surf-accent text-surf-white hover:text-surf-black transition-colors"
+                      aria-label="Next"
+                    >
+                      <ChevronRight size={24} />
+                    </button>
+
+                    <div
+                      onClick={(e) => e.stopPropagation()}
+                      className="relative max-w-md w-full bg-[#FAF8F5] text-neutral-900 p-4 sm:p-5 pb-9 sm:pb-12 shadow-[0_25px_70px_rgba(0,0,0,0.95)] border border-[#E5E0D8] rounded-[2px]"
+                    >
                     <div className="relative aspect-square w-full bg-neutral-950 overflow-hidden shadow-inner border border-black/10">
                       <img
                         src={activeSnap.url}
@@ -692,7 +700,8 @@ export default function Home() {
                         <span className="font-bold text-neutral-800">{activeSnap.date}</span>
                       </div>
                     </div>
-                  </div>
+                    </div>
+                  </>
                 );
               })()}
             </motion.div>
